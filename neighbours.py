@@ -21,10 +21,13 @@ def count_alive_neighbours(site : np.ndarray, state : np.ndarray) -> int:
 
     be careful that this assumes by summing that the elements of the state are boolean-like eg 0, 1 or False, True and not something like 2, 3
 
+    # TODO: Is there a way to avoid the for loop here? Eg by accessing the elements silmutaneously with parallelization and doing the sum by sharing the memory?
+    # TODO: Will this function work with Numba and JIT since I am using itertools?
+    
     Returns:
     
         int : number of alive neighbours
     
     """
        
-    return np.sum([state[tuple(element)] for element in site+np.array(list(product(np.array([0, -1, 1]), repeat = len(site)))[1:])])
+    return np.sum([state[element.reshape(1, 1, -1)] for element in site+np.array(list(product(np.array([0, -1, 1]), repeat = len(site)))[1:])])
