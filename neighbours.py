@@ -30,4 +30,4 @@ def count_alive_neighbours(site : np.ndarray, state : np.ndarray) -> int:
     
     """
        
-    return np.sum([state[element.reshape(1, 1, -1)] for element in site+np.array(list(product(np.array([0, -1, 1]), repeat = len(site)))[1:])])
+    return np.sum([state[element.reshape(1, 1, -1)] for element in ((site+np.array(list(product(np.array([0, -1, 1]), repeat = len(site)))[1:]))%len(state))])

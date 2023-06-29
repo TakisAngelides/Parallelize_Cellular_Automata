@@ -1,19 +1,25 @@
-import numpy as np
-import init_state
+from init_state import *
+from rules import *
+from dumpGIF import *
 
-
-
-
-def get_configurations(func,N, init):
-
+def get_configurations(time_steps, initial_state):
 
     #history[i, :, :] is the i-th timeslice of the evolution
-    history=np.full(tuple(np.append(N,init.shape)),1,dtype=init.dtype)
+    configurations = np.full(tuple(np.append(time_steps, initial_state.shape)), None, dtype=initial_state.dtype)
 
     #initialize
-    history[0, :, :]=init
+    configurations[0] = initial_state
 
+    state = initial_state
+    for t in range(1, time_steps):
+        state = apply_rules(state)
+        configurations[1] = state
+        
+    return configurations
+        
 
-    for _ in range(1,N):
-        func()
+time_steps = 100
+initial_state = initialize_random_array((4, 4, 4))
+configurations = get_configurations(time_steps, initial_state)
 
+dumpGIF(configurations, 'test.gif')
