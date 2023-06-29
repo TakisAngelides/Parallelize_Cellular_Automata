@@ -3,8 +3,8 @@ import matplotlib.animation as animation
 import numpy as np
 def dumpGIF(states, filename):
     
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection = '3d')
+    fig,ax1 = plt.figure()
+    ax = ax1.add_subplot(111, projection = '3d')
     
     def animate(frame):
         
