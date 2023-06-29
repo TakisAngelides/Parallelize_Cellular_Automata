@@ -6,4 +6,4 @@ def initialize_array(shape, initial_value=0, dtype=np.bool):
 
 def initialize_random_array(shape, values=[True, False]):
     
-    return np.random.choice(values, size = shape, p = [0.47,0.53])
+    return np.random.choice(values, size = shape, p = [0.47, 0.53])

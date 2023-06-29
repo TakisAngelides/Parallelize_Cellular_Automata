@@ -16,8 +16,8 @@ def get_configurations(time_steps, initial_state):
     return configurations
         
 
-time_steps = 10
-initial_state = initialize_random_array((4, 4, 4))
+time_steps = 20
+initial_state = initialize_random_array((20,20,20))
 configurations = get_configurations(time_steps, initial_state)
 
 dumpGIF(configurations, 'test.gif')

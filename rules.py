@@ -10,7 +10,6 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
 
     The function trivially iterates over all cells and applies the Clouds 1 rule (see https://softologyblog.wordpress.com/2019/12/28/3d-cellular-automata-3/)
     
-    # TODO: Make this general in d changing the access to I, J, K
     # TODO: Parallelize this function
     # TODO: Can Numba JIT be applied to this function since it calles the count_alive_neighbours function which is not certain whether it can be applied to Numba JIT itself?
 
@@ -20,17 +19,23 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
     """
     
-    I, J, K = state.shape
-    new_state = np.full((I, J, K), False)
-    for i in range(I):
-        for j in range(J):
-            for k in range(K):
-                current_state = state[i, j, k]
-                alive = count_alive_neighbours(np.array([i, j, k]), state)
+    new_state = np.full(state.shape, False)
+    
+    for site_index, current_cell_value in np.ndenumerate(state):
+    
+        alive = count_alive_neighbours(site_index, state)
+        
+        if current_cell_value:
+            
+            if alive > 10:
                 
-                if (alive >= 13) and (alive <= 19) and (not current_state):
-                    new_state[i, j, k] = True
-                if current_state and (alive >= 13):
-                    new_state[i, j, k] = True
+                new_state[site_index] = True
+        
+        else:
+            
+            if alive < 5:
                 
+                new_state[site_index] = True
+            
+            
     return new_state
