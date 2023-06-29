@@ -12,7 +12,8 @@ def dumpGIF(states, filename):
         ax.set_title(f'{frame}')
         ax.clear()
         ax.set_axis_off()
-        return ax.voxels(states[frame%2], edgecolor="k")
+        voxel = np.transpose(states[frame],(1,2,3,0))
+        return ax.voxels(voxel, edgecolor="k")
     
     ani = animation.FuncAnimation(fig, animate, frames = len(states), interval = 0.2)
     ani.save(filename, writer='pillow')
