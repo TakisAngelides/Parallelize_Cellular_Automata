@@ -1,2 +1,3 @@
 *.gif
 __pylance__
+.DS_Store
