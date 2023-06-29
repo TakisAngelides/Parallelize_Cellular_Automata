@@ -12,7 +12,7 @@ def dumpGIF(states, filename):
         ax.set_title(f'{frame}')
         ax.clear()
         ax.set_axis_off()
-        return ax.voxels(states[frame], edgecolor="k")
+        return ax.voxels(states[frame%2], edgecolor="k")
     
     ani = animation.FuncAnimation(fig, animate, frames = len(states), interval = 0.2)
     ani.save(filename, writer='pillow')
