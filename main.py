@@ -1,7 +1,6 @@
 from init_state import *
 from rules import *
 from dumpGIF import *
-from dumpGIF_2 import *
 
 def get_configurations(time_steps, initial_state):
 
