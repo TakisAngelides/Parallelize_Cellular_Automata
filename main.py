@@ -11,7 +11,7 @@ def get_configurations(time_steps, initial_state):
     state = initial_state
     for t in range(1, time_steps):
         state = apply_rules(state)
-        configurations[1] = state
+        configurations[t] = state
         
     return configurations
         
