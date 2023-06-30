@@ -1,6 +1,8 @@
 from itertools import product
 import numpy as np
+from numba import njit
 
+@njit()
 def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     
     """
@@ -22,7 +24,6 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     be careful that this assumes by summing that the elements of the state are boolean-like eg 0, 1 or False, True and not something like 2, 3
 
     # TODO: Is there a way to avoid the for loop here? Eg by accessing the elements silmutaneously with parallelization and doing the sum by sharing the memory?
-    # TODO: Will this function work with Numba and JIT since I am using itertools and summing over boolean values rather than integers 0, 1?
     
     Returns:
     
@@ -30,10 +31,35 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
 
     """
     
-    neighbor_indices = (site + np.array(list(product(np.array([0, -1, 1]), repeat=len(site))))[1:]) % len(state)
+    d = len(state.shape)
     
-    neighbors = state[tuple(neighbor_indices.T)]
+    if d == 1:
+        
+        sum = 0
+        for i in [-1, 1]:
+            if state[site[0] + i]:
+                sum += 1
+        return sum
+        
+    elif d == 2:
+        
+        sum = 0
+        for i in [0, -1, 1]:
+            for j in [0, -1, 1]:
+                if i == 0 and j == 0:
+                    continue
+                if state[site[0] + i, site[1] + j]:
+                    sum += 1
+        return sum
     
-    num_alive_neighbors = np.sum(neighbors)
-    
-    return num_alive_neighbors
+    elif d == 3:
+        
+        sum = 0
+        for i in [0, -1, 1]:
+            for j in [0, -1, 1]:
+                for k in [0, -1, 1]:
+                    if i == 0 and j == 0 and k == 0:
+                        continue
+                    if state[site[0] + i, site[1] + j, site[2] + k]:
+                        sum += 1
+        return sum

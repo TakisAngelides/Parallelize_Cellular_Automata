@@ -16,9 +16,10 @@ def get_configurations(time_steps, initial_state):
     return configurations
         
 
-time_steps = 500
-shape = (50, 50)
-initial_state = initialize_two_glider_octomino(shape)
+time_steps = 10
+shape = (4, 4, 4)
+# initial_state = initialize_two_glider_octomino(shape)
+initial_state = initialize_random_array(shape)
 configurations = get_configurations(time_steps, initial_state)
 
 dumpGIF(configurations, 'test.gif')

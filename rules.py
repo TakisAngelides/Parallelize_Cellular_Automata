@@ -1,5 +1,6 @@
 from neighbours import *
 
+@njit()
 def apply_rules(state : np.ndarray) -> np.ndarray:
     
     """
@@ -11,7 +12,6 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     The function trivially iterates over all cells and applies the Clouds 1 rule (see https://softologyblog.wordpress.com/2019/12/28/3d-cellular-automata-3/)
     
     # TODO: Parallelize this function
-    # TODO: Can Numba JIT be applied to this function since it calles the count_alive_neighbours function which is not certain whether it can be applied to Numba JIT itself?
 
     Returns:
     
@@ -23,10 +23,8 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
     for site_index, current_cell_value in np.ndenumerate(state):
     
-        alive = count_alive_neighbours(site_index, state)
+        alive : int = count_alive_neighbours(site_index, state)
         
-        # print(alive)
-    
         if current_cell_value and alive >= 2 and alive < 4:
             new_state[site_index] = True
         if not current_cell_value and alive == 3:
