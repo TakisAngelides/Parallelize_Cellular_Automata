@@ -11,8 +11,6 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
 
     The function trivially iterates over all cells and applies the Clouds 1 rule (see https://softologyblog.wordpress.com/2019/12/28/3d-cellular-automata-3/)
     
-    # TODO: Parallelize this function
-
     Returns:
     
         new_state : d-dimensional numpy array specifying the state of the cellular automata after 1 time evolution of rules, the value at each element is boolean-like

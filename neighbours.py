@@ -22,8 +22,6 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     and then we access the state with these and add them up to see how many are alive and return the integer of alive neighbours
 
     be careful that this assumes by summing that the elements of the state are boolean-like eg 0, 1 or False, True and not something like 2, 3
-
-    # TODO: Is there a way to avoid the for loop here? Eg by accessing the elements silmutaneously with parallelization and doing the sum by sharing the memory?
     
     Returns:
     
