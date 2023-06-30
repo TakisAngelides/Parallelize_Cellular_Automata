@@ -23,11 +23,15 @@ def get_configurations(time_steps, initial_state):
     return configurations
         
 
-time_steps = 16
-shape = (16, 16, 16)
+time_steps = 32
+shape = (32, 32, 32)
 # initial_state = initialize_two_glider_octomino(shape)
 initial_state = initialize_random_array(shape)
-print('Have written the initial state and now calling to get configurations.', flush = True)
+print(f'Have written the initial state with shape {shape} and now calling to get configurations for {time_steps} time steps.', flush = True)
+start = datetime.now()
 configurations = get_configurations(time_steps, initial_state)
+print(f'Time taken to get configurations is {datetime.now()-start}.', flush = True)
 
+start = datetime.now()
 dumpGIF(configurations, 'test.gif')
+print(f'Time taken to save the gif is {datetime.now()-start}.', flush = True)
