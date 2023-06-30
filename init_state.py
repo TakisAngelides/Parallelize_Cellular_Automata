@@ -15,10 +15,24 @@ def initialize_cellpy_array(shape):
 
 def initialize_glider(shape):
     
-    initial_state = initialize_glider(shape)
     initial_state = np.zeros(shape, dtype = bool)
     initial_state[:,initial_state.shape[0]//2] = True
     initial_state[0,initial_state.shape[0]//2] = False
     initial_state[len(initial_state)//2,initial_state.shape[0]//2] = False
+    
+    return initial_state
+
+def initialize_two_glider_octomino(shape):
+    
+    initial_state = np.zeros(shape)
+    
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
+    initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
+    initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = True
+    initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
+    initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = True
+    initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = True
+    initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
     
     return initial_state
