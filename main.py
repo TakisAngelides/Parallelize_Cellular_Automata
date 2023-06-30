@@ -1,6 +1,9 @@
 from init_state import *
 from rules import *
 from dumpGIF import *
+import os
+
+os.environ['OMP_NUM_THREADS'] = '16'
 
 def get_configurations(time_steps, initial_state):
 
