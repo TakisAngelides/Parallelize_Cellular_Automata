@@ -59,7 +59,7 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
             
                     alive : int = count_alive_neighbours(np.array([i, j, k]), state)
                     
-                    if current_cell_value and alive >= 2 and alive < 4:
+                    if current_cell_value and alive >= 9 and alive < 23:
                         new_state[i, j, k] = True
                     if not current_cell_value and alive == 3:
                         new_state[i, j, k]= True
