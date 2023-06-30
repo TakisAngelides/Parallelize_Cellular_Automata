@@ -11,7 +11,6 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     The function trivially iterates over all cells and applies the Clouds 1 rule (see https://softologyblog.wordpress.com/2019/12/28/3d-cellular-automata-3/)
     
     # TODO: Parallelize this function
-    # TODO: Can Numba JIT be applied to this function since it calles the count_alive_neighbours function which is not certain whether it can be applied to Numba JIT itself?
 
     Returns:
     
