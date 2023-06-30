@@ -66,4 +66,4 @@ def dumpGIF(states, filename):
             
     ani = animation.FuncAnimation(fig, animate, frames = len(states), interval = 0.2)
     ani.save(filename, writer='pillow')
-    plt.show()
+    # plt.show()
