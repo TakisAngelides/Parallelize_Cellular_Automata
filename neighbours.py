@@ -1,8 +1,8 @@
 from itertools import product
 import numpy as np
-from numba import njit
+from numba import njit, prange
 
-@njit()
+@njit(parallel = True)
 def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     
     """
@@ -36,7 +36,9 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     if d == 1:
         
         sum = 0
-        for i in [-1, 1]:
+        for i in prange(-1, 2):
+            if i == 0:
+                continue
             if state[site[0] + i]:
                 sum += 1
         return sum
@@ -44,8 +46,8 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     elif d == 2:
         
         sum = 0
-        for i in [0, -1, 1]:
-            for j in [0, -1, 1]:
+        for i in prange(-1, 2):
+            for j in prange(-1, 2):
                 if i == 0 and j == 0:
                     continue
                 if state[site[0] + i, site[1] + j]:
@@ -55,9 +57,9 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     elif d == 3:
         
         sum = 0
-        for i in [0, -1, 1]:
-            for j in [0, -1, 1]:
-                for k in [0, -1, 1]:
+        for i in prange(-1, 2):
+            for j in prange(-1, 2):
+                for k in prange(-1, 2):
                     if i == 0 and j == 0 and k == 0:
                         continue
                     if state[site[0] + i, site[1] + j, site[2] + k]:
