@@ -25,17 +25,12 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
         alive = count_alive_neighbours(site_index, state)
         
-        if current_cell_value:
-            
-            if alive > 10:
+        # print(alive)
+    
+        if current_cell_value and alive > 2 and alive < 4:
+            new_state[site_index] = True
+        if not current_cell_value and (alive == 3 or np.random.rand() > 0.2):
+            new_state[site_index]= True
+    
                 
-                new_state[site_index] = True
-        
-        else:
-            
-            if alive < 5:
-                
-                new_state[site_index] = True
-            
-            
     return new_state
