@@ -5,7 +5,7 @@ import os
 import numba
 from datetime import datetime
 
-numba.set_num_threads(32)
+numba.set_num_threads(16)
 print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
 
 def get_configurations(time_steps, initial_state):
