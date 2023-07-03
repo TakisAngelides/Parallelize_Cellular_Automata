@@ -4,13 +4,14 @@ from dumpGIF import *
 import os
 import numba
 from datetime import datetime
+import cupy as cp
 
-numba.set_num_threads(16)
+numba.set_num_threads(1)
 print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
 
 def get_configurations(time_steps, initial_state):
 
-    configurations = np.full(tuple(np.append(time_steps, initial_state.shape)), None, dtype=initial_state.dtype)
+    configurations = cp.full(tuple(cp.append(time_steps, initial_state.shape)), 0)
 
     configurations[0] = initial_state
 
@@ -23,8 +24,8 @@ def get_configurations(time_steps, initial_state):
     return configurations
         
 
-time_steps = 64
-shape = (64, 64, 64)
+time_steps = 1
+shape = (3)
 # initial_state = initialize_two_glider_octomino(shape)
 initial_state = initialize_random_array(shape)
 print(f'Have written the initial state with shape {shape} and now calling to get configurations for {time_steps} time steps.', flush = True)

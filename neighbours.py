@@ -1,9 +1,9 @@
 from itertools import product
-import numpy as np
+import cupy as cp
 from numba import njit, prange
 
 @njit(parallel = True)
-def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
+def count_alive_neighbours(site: cp.ndarray, state: cp.ndarray) -> int:
     
     """
          
@@ -13,9 +13,9 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
 
         state : d-dimensional numpy array specifying the state of the cellular automata, the value at each element is boolean-like
 
-    product(np.array([0, -1, 1]), repeat = len(site)) is equivalent to [[x, y, z] for x in [0, -1, 1] for y in [0, -1, 1] for z in [0, -1, 1]] for d = 3
+    product(cp.array([0, -1, 1]), repeat = len(site)) is equivalent to [[x, y, z] for x in [0, -1, 1] for y in [0, -1, 1] for z in [0, -1, 1]] for d = 3
     
-    from the above list we omit the first element [0, 0, 0] since we want to add these lists to site = np.array([i, j, k]) to get the neighbour indices hence the [1:]
+    from the above list we omit the first element [0, 0, 0] since we want to add these lists to site = cp.array([i, j, k]) to get the neighbour indices hence the [1:]
     
     then we do broadcasting of site which is of shape (d,) and this product array which is of shape (3^d, d) to get the tuples which represent the indices of the neighbours
     
@@ -33,33 +33,24 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     
     if d == 1:
         
-        sum = 0
+        sum = -state[site]
         for i in prange(-1, 2):
-            if i == 0:
-                continue
-            if state[site[0] + i]:
-                sum += 1
+            sum += state[site[0] + i]
         return sum
         
     elif d == 2:
         
-        sum = 0
+        sum = -state[site]
         for i in prange(-1, 2):
             for j in prange(-1, 2):
-                if i == 0 and j == 0:
-                    continue
-                if state[site[0] + i, site[1] + j]:
-                    sum += 1
+                sum += state[site[0] + i, site[1] + j]
         return sum
     
     elif d == 3:
         
-        sum = 0
+        sum = -state[site]
         for i in prange(-1, 2):
             for j in prange(-1, 2):
                 for k in prange(-1, 2):
-                    if i == 0 and j == 0 and k == 0:
-                        continue
-                    if state[site[0] + i, site[1] + j, site[2] + k]:
-                        sum += 1
+                    sum += state[site[0] + i, site[1] + j, site[2] + k]
         return sum

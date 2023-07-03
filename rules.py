@@ -1,7 +1,7 @@
 from neighbours import *
 
 @njit(parallel = True)
-def apply_rules(state : np.ndarray) -> np.ndarray:
+def apply_rules(state : cp.ndarray) -> cp.ndarray:
     
     """
 
@@ -17,7 +17,7 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
     """
     
-    new_state = np.full(state.shape, False)
+    new_state = cp.full(state.shape, 0)
     
     d = len(state.shape)
     dims = state.shape
@@ -28,12 +28,12 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
             current_cell_value = state[i]
     
-            alive : int = count_alive_neighbours(np.array([i]), state)
+            alive : int = count_alive_neighbours(cp.array([i]), state)
             
-            if current_cell_value and alive >= 1:
-                new_state[i] = True
+            if current_cell_value and alive < 2:
+                new_state[i] = 1
             if not current_cell_value and alive == 2:
-                new_state[i]= True
+                new_state[i]= 1
         
     elif d == 2:
         
@@ -42,7 +42,7 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
                 current_cell_value = state[i, j]
         
-                alive : int = count_alive_neighbours(np.array([i, j]), state)
+                alive : int = count_alive_neighbours(cp.array([i, j]), state)
                 
                 if current_cell_value and alive >= 2 and alive < 4:
                     new_state[i, j] = True
@@ -57,7 +57,7 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
                     current_cell_value = state[i, j, k]
             
-                    alive : int = count_alive_neighbours(np.array([i, j, k]), state)
+                    alive : int = count_alive_neighbours(cp.array([i, j, k]), state)
                     
                     if current_cell_value and alive >= 9 and alive < 23:
                         new_state[i, j, k] = True

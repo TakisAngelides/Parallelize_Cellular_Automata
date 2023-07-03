@@ -1,13 +1,13 @@
-import numpy as np
 import cellpylib as cpl
+import cupy as cp
 
-def initialize_array(shape, initial_value=0, dtype=np.bool):
+def initialize_array(shape, initial_value = 0):
     
-    return np.full(shape, initial_value, dtype=dtype)
+    return cp.full(shape, initial_value)
 
-def initialize_random_array(shape, values=[True, False], p = [0.5, 0.5]):
+def initialize_random_array(shape, values = [0, 1], p = [0.5, 0.5]):
     
-    return np.random.choice(values, size = shape, p = p)
+    return cp.random.choice(values, size = shape, p = p)
 
 def initialize_cellpy_array(shape):
     
@@ -15,7 +15,7 @@ def initialize_cellpy_array(shape):
 
 def initialize_glider(shape):
     
-    initial_state = np.zeros(shape, dtype = bool)
+    initial_state = cp.zeros(shape, dtype = bool)
     initial_state[:,initial_state.shape[0]//2] = True
     initial_state[0,initial_state.shape[0]//2] = False
     initial_state[len(initial_state)//2,initial_state.shape[0]//2] = False
@@ -24,7 +24,7 @@ def initialize_glider(shape):
 
 def initialize_two_glider_octomino(shape):
     
-    initial_state = np.zeros(shape)
+    initial_state = cp.zeros(shape)
     
     initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
     initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
