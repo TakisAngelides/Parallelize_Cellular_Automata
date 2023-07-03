@@ -24,8 +24,8 @@ def get_configurations(configurations_shape):
     return configurations
         
 
-time_steps = 1
-shape = [3]
+time_steps = 10000
+shape = [1000]
 # initial_state = initialize_two_glider_octomino(shape)
 initial_state = initialize_random_array(shape)
 configurations_shape = tuple([time_steps] + shape)
