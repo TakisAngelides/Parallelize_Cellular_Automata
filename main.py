@@ -9,9 +9,9 @@ import cupy as cp
 numba.set_num_threads(1)
 print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
 
-def get_configurations(time_steps, initial_state):
+def get_configurations(configurations_shape):
 
-    configurations = cp.full((time_steps, initial_state.shape), 0)
+    configurations = cp.full(configurations_shape, 0)
 
     configurations[0] = initial_state
 
@@ -30,7 +30,7 @@ shape = (3)
 initial_state = initialize_random_array(shape)
 print(f'Have written the initial state with shape {shape} and now calling to get configurations for {time_steps} time steps.', flush = True)
 start = datetime.now()
-configurations = get_configurations(time_steps, initial_state)
+configurations = get_configurations((time_steps, initial_state))
 print(f'Time taken to get configurations is {datetime.now()-start}.', flush = True)
 
 # print('Now calling to get the gif and save it.')
