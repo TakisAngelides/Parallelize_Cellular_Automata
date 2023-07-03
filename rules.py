@@ -30,9 +30,9 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
             alive : int = count_alive_neighbours(np.array([i]), state)
             
-            if current_cell_value and alive >= 2 and alive < 4:
+            if current_cell_value and alive >= 1:
                 new_state[i] = True
-            if not current_cell_value and alive == 3:
+            if not current_cell_value and alive == 2:
                 new_state[i]= True
         
     elif d == 2:
