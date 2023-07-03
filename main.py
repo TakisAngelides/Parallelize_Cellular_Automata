@@ -24,7 +24,7 @@ def get_configurations(time_steps, initial_state):
         
 
 time_steps = 10000
-shape = (10000)
+shape = (1000)
 # initial_state = initialize_two_glider_octomino(shape)
 initial_state = initialize_random_array(shape)
 print(f'Have written the initial state with shape {shape} and now calling to get configurations for {time_steps} time steps.', flush = True)
