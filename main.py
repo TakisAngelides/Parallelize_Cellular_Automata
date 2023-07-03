@@ -11,7 +11,7 @@ print('Number of numba threads is set to:', numba.get_num_threads(), flush = Tru
 
 def get_configurations(time_steps, initial_state):
 
-    configurations = cp.full(tuple(cp.append(time_steps, initial_state.shape)), 0)
+    configurations = cp.full((time_steps, initial_state.shape), 0)
 
     configurations[0] = initial_state
 
