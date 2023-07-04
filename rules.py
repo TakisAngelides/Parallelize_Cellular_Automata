@@ -17,7 +17,7 @@ def apply_rules_1d(state : cp.ndarray, state_shape : int) -> cp.ndarray:
     
     """
     
-    new_state = cp.full(state_shape, 0)
+    new_state = cp.full((state_shape), 0)
     
     dims = state_shape
     d = len(dims)
