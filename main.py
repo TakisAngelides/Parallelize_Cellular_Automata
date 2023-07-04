@@ -13,9 +13,11 @@ def update_state(state, new_state):
     """
     
     i = cuda.grid(1)
-    print(i)
-    
+        
     if i > 0 and i < state.shape[0] - 1:
+        
+        print(i)
+        
         new_state[i] = (state[i-1] + state[i] + state[i+1]) % 2
 
 def run_cellular_automaton(initial_state, num_iterations):
@@ -35,7 +37,7 @@ def run_cellular_automaton(initial_state, num_iterations):
 width = 100
 
 # Set the number of iterations
-num_iterations = 100
+num_iterations = 1
 
 # Create the initial state randomly
 initial_state = np.random.randint(0, 2, size=width, dtype=np.uint8)
