@@ -49,8 +49,8 @@ def get_configurations(num_iterations, width, height):
     return configurations
     
 # Set the size of the grid
-width = 8
-height = 8
+width = 16
+height = 16
 
 # Set the number of iterations
 num_iterations = 10
