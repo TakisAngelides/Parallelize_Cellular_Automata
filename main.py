@@ -33,16 +33,18 @@ def update_state(width, height, configurations_dev, iteration):
     alive = configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] + configurations_dev[iteration-1, x, bottom]
              
     configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
+    
+    cuda.synchronize()  # Ensure all computations on GPU are completed 
 
 def get_configurations(num_iterations, width, height):
     
     block_size = (1, 1)
     grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
     
-    configurations_dev = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
-    configurations_dev[0, :, :] = initial_state
+    configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
+    configurations[0, :, :] = initial_state
         
-    # configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
+    configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
     for t in range(num_iterations):
         
@@ -50,9 +52,9 @@ def get_configurations(num_iterations, width, height):
         cuda.synchronize()  # Ensure all computations on GPU are completed    
         
     # Copy the configurations array from GPU to CPU
-    # configurations = configurations_dev.copy_to_host()
+    configurations = configurations_dev.copy_to_host()
     
-    return configurations_dev
+    return configurations
     
 # Set the size of the grid
 width = 16
