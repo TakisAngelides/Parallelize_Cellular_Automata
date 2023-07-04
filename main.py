@@ -16,7 +16,7 @@ def update_state(state, new_state, width, height, configurations, iteration):
     configurations[i, j, iteration] = new_state[i, j]  # Save the current state in the configurations array
 
 def get_configurations(initial_state, num_iterations, width, height):
-    block_size = (16, 16)
+    block_size = (1, 1)
     grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
 
     state_dev = cuda.to_device(initial_state)  # Copy the initial state to the GPU
