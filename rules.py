@@ -17,6 +17,7 @@ def apply_rules_1d(state : cp.ndarray, state_shape : int) -> cp.ndarray:
     
     """
     
+    print(type(state_shape))
     new_state = cp.empty(state_shape, dtype = cp.uint8)
     
     dims = state_shape
