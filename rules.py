@@ -1,7 +1,7 @@
 from neighbours import *
 
 @cp.fuse(kernel_name = 'apply_rules')
-def apply_rules(state : cp.ndarray, state_shape : tuple) -> cp.ndarray:
+def apply_rules_1d(state : cp.ndarray, state_shape : int) -> cp.ndarray:
     
     """
 

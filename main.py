@@ -21,7 +21,7 @@ def get_configurations(configurations_shape, initial_state):
     state_shape = state.shape
     for t in range(1, time_steps):
         print(f'Running time step {t} starting at {datetime.now()}', flush = True)
-        state = apply_rules(state, state_shape)
+        state = apply_rules_1d(state, state_shape)
         configurations[t] = state
         
     print(f'Time taken to calculate the configurations on GPU is {datetime.now()-start}. (Does not account for GPU back to CPU transfer time)', flush = True)
