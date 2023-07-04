@@ -27,7 +27,7 @@ width = 100
 height = 100
 
 # Set the number of iterations
-num_iterations = 100
+num_iterations = 1
 
 # Create the initial state randomly
 initial_state = cp.random.randint(0, 2, size=(height, width), dtype=cp.int32)
