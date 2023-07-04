@@ -1,6 +1,8 @@
 from numba import cuda
 import numpy as np
 import matplotlib.pyplot as plt
+from datetime import datetime
+from dumpGIF import *
 
 @cuda.jit
 def update_state(state, new_state, width, height, configurations, iteration):
@@ -37,11 +39,11 @@ def get_configurations(initial_state, num_iterations, width, height):
     return configurations
 
 # Set the size of the grid
-width = 100
-height = 100
+width = 16
+height = 16
 
 # Set the number of iterations
-num_iterations = 10
+num_iterations = 5
 
 # Create the initial state randomly
 initial_state = np.random.randint(0, 2, size=(width, height), dtype=np.uint8)
@@ -49,7 +51,12 @@ initial_state = np.random.randint(0, 2, size=(width, height), dtype=np.uint8)
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(initial_state, num_iterations, width, height)
 
-# Plot the final state (last configuration)
-final_state = configurations[:, :, -1]
-plt.imshow(final_state, cmap='binary')
-plt.savefig('test.png', bbox_inches='tight')
+# # Plot the final state (last configuration)
+# final_state = configurations[:, :, -1]
+# plt.imshow(final_state, cmap='binary')
+# plt.savefig('test.png', bbox_inches='tight')
+
+print('Now calling to get the gif and save it.')
+start = datetime.now()
+dumpGIF(configurations, 'test.gif')
+print(f'Time taken to save the gif is {datetime.now()-start}.', flush = True)
