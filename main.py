@@ -49,7 +49,7 @@ num_iterations = 10
 
 # Create the initial state randomly
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
-initial_state = np.zeros((width, height), dtype = np.bool)
+initial_state = np.zeros((width, height), dtype = bool)
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = 1
 initial_state[len(initial_state)//2, initial_state.shape[0]//2] = 1
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = 1
@@ -60,7 +60,7 @@ initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = 1
 initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = 1
 
 # Run the cellular automaton and get the configurations
-configurations = np.empty((num_iterations + 1, width, height), dtype = np.bool)  # Array to store configurations on CPU
+configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
 configurations[0] = initial_state
 configurations = get_configurations(num_iterations, width, height)
 
