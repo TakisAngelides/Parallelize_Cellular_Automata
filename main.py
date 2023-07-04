@@ -34,6 +34,8 @@ def update_state(width, height, configurations_dev, iteration):
              
     configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
 
+    print(alive, int(((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or ((not configurations_dev[iteration-1, x, y]) and (alive == 3))))
+
 def get_configurations(num_iterations, width, height):
     
     block_size = (1, 1)
