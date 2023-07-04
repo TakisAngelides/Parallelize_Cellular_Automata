@@ -63,10 +63,11 @@ num_iterations = 10
 initial_state = np.zeros((width, height), dtype = bool)
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)+1, (initial_state.shape[0]//2)+1] = True
 initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
 # initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
-initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = True
-initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)] = True
+# initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
 # initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = True
 # initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = True
 # initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
