@@ -1,7 +1,6 @@
 import cupy as cp
 import matplotlib.pyplot as plt
 
-@cp.fuse
 def update_state(state):
     new_state = cp.empty(state.shape, dtype=state.dtype)
     new_state[1:-1, 1:-1] = (state[:-2, :-2] + state[:-2, 1:-1] + state[:-2, 2:] +
@@ -15,6 +14,7 @@ def update_state(state):
 
     return new_state
 
+@cp.fuse
 def run_cellular_automaton(initial_state, num_iterations):
     state = initial_state
 
