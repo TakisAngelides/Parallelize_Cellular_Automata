@@ -39,12 +39,12 @@ def get_configurations(initial_state, num_iterations, width, height):
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
     for t in range(num_iterations):
+        
         update_state[grid_size, block_size](state_dev, new_state_dev, width, height, configurations_dev, t + 1) # on GPU
+        cuda.synchronize()  # Ensure all computations on GPU are completed    
         
         # Swap state and new_state arrays
         state_dev, new_state_dev = new_state_dev, state_dev
-    
-    cuda.synchronize()  # Ensure all computations on GPU are completed
     
     # Copy the configurations array from GPU to CPU
     configurations = configurations_dev.copy_to_host()
@@ -56,7 +56,7 @@ width = 16
 height = 16
 
 # Set the number of iterations
-num_iterations = 100
+num_iterations = 10
 
 # Create the initial state randomly
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
@@ -73,8 +73,7 @@ initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = 1
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(initial_state, num_iterations, width, height)
 
-# Plot the final state (last configuration)
-final_state = configurations[-1]
+print(configurations)
 
 print('Now calling to get the gif and save it.')
 start = datetime.now()
