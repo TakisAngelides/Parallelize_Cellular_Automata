@@ -1,20 +1,22 @@
 import cupy as cp
 import matplotlib.pyplot as plt
 
+@cp.fuse
 def update_state(state):
     new_state = cp.empty((100, 100), dtype=state.dtype)
-    new_state[1:-1, 1:-1] = (state[:-2, :-2] + state[:-2, 1:-1] + state[:-2, 2:] +
-                             state[1:-1, :-2] + state[1:-1, 2:] +
-                             state[2:, :-2] + state[2:, 1:-1] + state[2:, 2:]) // 8
+    height, width = 100, 100
 
-    new_state[0, :] = new_state[1, :]
-    new_state[-1, :] = new_state[-2, :]
-    new_state[:, 0] = new_state[:, 1]
-    new_state[:, -1] = new_state[:, -2]
+    for i in range(height):
+        for j in range(width):
+            if i == 0 or i == height - 1 or j == 0 or j == width - 1:
+                new_state[i, j] = state[i, j]
+            else:
+                new_state[i, j] = (state[i-1, j-1] + state[i-1, j] + state[i-1, j+1] +
+                                   state[i, j-1] + state[i, j] + state[i, j+1] +
+                                   state[i+1, j-1] + state[i+1, j] + state[i+1, j+1]) // 9
 
     return new_state
 
-@cp.fuse
 def run_cellular_automaton(initial_state):
     state = initial_state
 
