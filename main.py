@@ -15,6 +15,7 @@ def update_state(state, new_state, width, height, configurations, iteration):
     bottom = (i + 1) % height
     
     alive = state[i, left] + state[i, right] + state[top, j] + state[bottom, j]
+    print(i,j,iteration,alive)
     
     if state[i, j] == 1:  # Current cell is live
         if alive < 2 or alive > 3:
@@ -56,7 +57,7 @@ width = 16
 height = 16
 
 # Set the number of iterations
-num_iterations = 10
+num_iterations = 2
 
 # Create the initial state randomly
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
@@ -72,8 +73,6 @@ initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = 1
 
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(initial_state, num_iterations, width, height)
-
-print(configurations)
 
 print('Now calling to get the gif and save it.')
 start = datetime.now()
