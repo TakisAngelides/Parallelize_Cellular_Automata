@@ -2,6 +2,10 @@ from itertools import product
 import cupy as cp
 from numba import njit, prange
 
+@cupy.fuse(kernel_name = 'addition')
+def addition(x, y):
+    return x + y
+
 @njit(parallel = True)
 def count_alive_neighbours(site: cp.ndarray, state: cp.ndarray) -> int:
     
@@ -33,9 +37,9 @@ def count_alive_neighbours(site: cp.ndarray, state: cp.ndarray) -> int:
     
     if d == 1:
         
-        sum = -state[site]
+        sum = -state[site] # Here we start with this because in the for loop it is added in the sum and if its 0 it does nothing if its 1 this starting value will cancel the one contributing to the sum
         for i in prange(-1, 2):
-            sum += state[site[0] + i]
+            sum = addition(sum, state[site[0] + i])
         return sum
         
     elif d == 2:
@@ -43,7 +47,7 @@ def count_alive_neighbours(site: cp.ndarray, state: cp.ndarray) -> int:
         sum = -state[site]
         for i in prange(-1, 2):
             for j in prange(-1, 2):
-                sum += state[site[0] + i, site[1] + j]
+                sum = addition(sum, state[site[0] + i, site[1] + j])
         return sum
     
     elif d == 3:
@@ -52,5 +56,5 @@ def count_alive_neighbours(site: cp.ndarray, state: cp.ndarray) -> int:
         for i in prange(-1, 2):
             for j in prange(-1, 2):
                 for k in prange(-1, 2):
-                    sum += state[site[0] + i, site[1] + j, site[2] + k]
+                    sum = addition(sum, state[site[0] + i, site[1] + j, site[2] + k])
         return sum
