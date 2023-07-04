@@ -40,6 +40,9 @@ def get_configurations(initial_state, num_iterations, width, height):
     
     for t in range(num_iterations):
         update_state[grid_size, block_size](state_dev, new_state_dev, width, height, configurations_dev, t + 1) # on GPU
+        
+        # Swap state and new_state arrays
+        state_dev, new_state_dev = new_state_dev, state_dev
     
     cuda.synchronize()  # Ensure all computations on GPU are completed
     
