@@ -18,6 +18,7 @@ def update_state(state):
 def run_cellular_automaton(initial_state, num_iterations):
     state = initial_state
 
+    print(type(num_iterations))
     for _ in range(num_iterations):
         state = update_state(state)
 
