@@ -52,14 +52,23 @@ def get_configurations(initial_state, num_iterations, width, height):
     return configurations
 
 # Set the size of the grid
-width = 20
-height = 20
+width = 16
+height = 16
 
 # Set the number of iterations
-num_iterations = 10
+num_iterations = 100
 
 # Create the initial state randomly
-initial_state = np.random.randint(0, 2, size=(width, height), dtype=np.uint8)
+# initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
+initial_state = np.zeros(size=(width, height), dtype = np.uint8)
+initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = 1
+initial_state[len(initial_state)//2, initial_state.shape[0]//2] = 1
+initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = 1
+initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = 1
+initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = 1
+initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = 1
+initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = 1
+initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = 1
 
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(initial_state, num_iterations, width, height)
