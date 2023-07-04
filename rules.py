@@ -1,6 +1,6 @@
 from neighbours import *
 
-@njit(parallel = True)
+@cp.fuse(kernel_name = 'apply_rules')
 def apply_rules(state : cp.ndarray) -> cp.ndarray:
     
     """
@@ -24,16 +24,23 @@ def apply_rules(state : cp.ndarray) -> cp.ndarray:
     
     if d == 1:
         
-        for i in prange(dims[0]):
-    
-            current_cell_value = state[i]
-    
-            alive : int = count_alive_neighbours(cp.array([i]), state)
-            
-            if current_cell_value and alive < 2:
-                new_state[i] = 1
-            if not current_cell_value and alive == 2:
-                new_state[i]= 1
+        # Get the thread indices
+        thread_x = cp.threadIdx.x
+        
+        # Get the block indices
+        block_x = cp.blockIdx.x
+        
+        # Calculate the global indices
+        global_x = block_x * cp.blockDim.x + thread_x
+        
+        current_cell_value = state[global_x]
+
+        alive : int = count_alive_neighbours(cp.array([global_x]), state)
+        
+        if current_cell_value and alive < 2:
+            new_state[global_x] = 1
+        if not current_cell_value and alive == 2:
+            new_state[global_x]= 1
         
     # elif d == 2:
         
