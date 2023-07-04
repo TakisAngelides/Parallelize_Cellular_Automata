@@ -37,10 +37,7 @@ def apply_rules_1d(state : cp.ndarray, state_shape : cp.ndarray) -> cp.ndarray:
 
         alive : int = count_alive_neighbours(cp.array([global_x]), state)
         
-        if current_cell_value and alive < 2:
-            new_state[global_x] = 1
-        if not current_cell_value and alive == 2:
-            new_state[global_x]= 1
+        new_state[global_x] = cp.logical_or(cp.logical_and(current_cell_value, alive == 2), alive == 3)
         
     # elif d == 2:
         
