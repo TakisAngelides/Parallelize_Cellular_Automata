@@ -14,7 +14,8 @@ def update_state(state, new_state, width, height):
     
     new_state[i, j] = (state[i, left] + state[i, right] + state[top, j] + state[bottom, j]) % 2
 
-def run_cellular_automaton(initial_state, num_iterations, width, height):
+@cuda.jit
+def get_configurations(initial_state, num_iterations, width, height):
     
     # The grid is the grid of blocks where each block contains threads arranged in a two dimensional grid
     
@@ -47,7 +48,7 @@ def run_cellular_automaton(initial_state, num_iterations, width, height):
     new_state = np.empty_like(state)
 
     for _ in range(num_iterations):
-        update_state[grid_size, block_size](state, new_state, width, height)
+        update_state[grid_size, block_size](state, new_state, width, height) # on GPU 
         state, new_state = new_state, state
 
     return state
@@ -63,7 +64,7 @@ num_iterations = 1
 initial_state = np.random.randint(0, 2, size = (width, height), dtype = np.uint8)
 
 # Run the cellular automaton
-final_state = run_cellular_automaton(initial_state, num_iterations, width, height)
+final_state = get_configurations(initial_state, num_iterations, width, height)
 
 # Plot the final state
 plt.imshow(final_state, cmap='binary')
