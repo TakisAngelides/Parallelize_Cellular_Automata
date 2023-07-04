@@ -1,68 +1,43 @@
-import numpy as np
-from numba import cuda
+import cupy as cp
+import matplotlib.pyplot as plt
 
-@cuda.jit
-def cellular_automaton_kernel(arr, new_arr):
-    # Calculate the global indices in 2D space
-    x, y = cuda.grid(2)
+def run_cellular_automaton(initial_state, num_iterations):
+    state = initial_state
+    new_state = cp.empty_like(state)
 
-    # Get the dimensions of the array
-    dim_x, dim_y = arr.shape
-
-    # Define the neighborhood indices
-    neighbor_indices = [(0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)]
-
-    # Apply the cellular automaton rules
-    if x < dim_x and y < dim_y:
-        cell_state = arr[x, y]
-        neighbor_count = 0
-
-        # Count the number of alive neighbors
-        for dx, dy in neighbor_indices:
-            nx, ny = x + dx, y + dy
-
-            # Check if the neighbor is within the array boundaries
-            if 0 <= nx < dim_x and 0 <= ny < dim_y:
-                neighbor_state = arr[nx, ny]
-                neighbor_count += neighbor_state
-
-        # Apply the rules of the cellular automaton
-        if cell_state == 1 and neighbor_count < 2:
-            new_arr[x, y] = 0  # Cell dies due to underpopulation
-        elif cell_state == 1 and neighbor_count > 3:
-            new_arr[x, y] = 0  # Cell dies due to overpopulation
-        elif cell_state == 0 and neighbor_count == 3:
-            new_arr[x, y] = 1  # Cell is born due to reproduction
-        else:
-            new_arr[x, y] = cell_state  # Cell remains unchanged
-
-def run_cellular_automaton(arr, num_iterations):
-    # Get the dimensions of the array
-    dim_x, dim_y = arr.shape
-
-    # Allocate GPU memory for the array
-    d_arr = cuda.to_device(arr)
-    d_new_arr = cuda.device_array_like(d_arr)
-
-    # Define the block and grid sizes
-    threads_per_block = (16, 16)
-    blocks_per_grid_x = (dim_x + threads_per_block[0] - 1) // threads_per_block[0]
-    blocks_per_grid_y = (dim_y + threads_per_block[1] - 1) // threads_per_block[1]
-    blocks_per_grid = (blocks_per_grid_x, blocks_per_grid_y)
-
-    # Run the cellular automaton for the specified number of iterations
     for _ in range(num_iterations):
-        cellular_automaton_kernel[blocks_per_grid, threads_per_block](d_arr, d_new_arr)
-        d_arr, d_new_arr = d_new_arr, d_arr
+        # Apply rules to update the state
+        new_state[1:-1, 1:-1] = (state[:-2, :-2] + state[:-2, 1:-1] + state[:-2, 2:] +
+                                 state[1:-1, :-2] + state[1:-1, 2:] +
+                                 state[2:, :-2] + state[2:, 1:-1] + state[2:, 2:]) // 8
 
-    # Transfer the final array back to the CPU
-    final_arr = d_arr.copy_to_host()
+        # Update the boundary cells with the nearest neighbors
+        new_state[0, :] = new_state[1, :]
+        new_state[-1, :] = new_state[-2, :]
+        new_state[:, 0] = new_state[:, 1]
+        new_state[:, -1] = new_state[:, -2]
 
-    return final_arr
+        # Swap the state and new_state arrays
+        state, new_state = new_state, state
 
+    return state
 
-# Example usage
-arr = np.random.randint(0, 2, size=(100, 100))
-num_iterations = 10
+# Set the size of the grid
+width = 100
+height = 100
 
-final_arr = run_cellular_automaton(arr, num_iterations)
+# Set the number of iterations
+num_iterations = 100
+
+# Create the initial state randomly
+initial_state = cp.random.randint(0, 2, size=(height, width), dtype=cp.int32)
+
+# Run the cellular automaton
+final_state = run_cellular_automaton(initial_state, num_iterations)
+
+# Convert the final state to a NumPy array for visualization
+final_state_np = cp.asnumpy(final_state)
+
+# Plot the final state
+plt.imshow(final_state_np, cmap='binary')
+plt.show()
