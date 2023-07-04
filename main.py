@@ -16,10 +16,7 @@ def update_state(width, height, configurations_dev, iteration):
     
     alive = configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] + configurations_dev[iteration-1, x, bottom]
     
-    if iteration == 2:
-        print(x, y, configurations_dev[iteration, x, y])
-        
-        
+    
     if configurations_dev[iteration-1, x, y] == True:  # Current cell is live
         if alive < 2 or alive > 3:
             # Any live cell with fewer than two or more than three live neighbors dies
@@ -28,6 +25,9 @@ def update_state(width, height, configurations_dev, iteration):
         if alive == 3:
             # Any dead cell with exactly three live neighbors becomes a live cell
             configurations_dev[iteration, x, y] = True
+            
+    if iteration == 2:
+        print(x, y, configurations_dev[iteration, x, y])
     
     # configurations_dev[iteration, x, y] = int((configurations_dev[iteration-1, x, y] == 1 and (alive == 2 or alive == 3)) or (configurations_dev[iteration-1, x, y] == 0 and alive == 3))
 
