@@ -1,24 +1,25 @@
 import cupy as cp
 import matplotlib.pyplot as plt
 
+@cp.fuse
+def update_state(state):
+    new_state = cp.empty_like(state)
+    new_state[1:-1, 1:-1] = (state[:-2, :-2] + state[:-2, 1:-1] + state[:-2, 2:] +
+                             state[1:-1, :-2] + state[1:-1, 2:] +
+                             state[2:, :-2] + state[2:, 1:-1] + state[2:, 2:]) // 8
+
+    new_state[0, :] = new_state[1, :]
+    new_state[-1, :] = new_state[-2, :]
+    new_state[:, 0] = new_state[:, 1]
+    new_state[:, -1] = new_state[:, -2]
+
+    return new_state
+
 def run_cellular_automaton(initial_state, num_iterations):
     state = initial_state
-    new_state = cp.empty_like(state)
 
     for _ in range(num_iterations):
-        # Apply rules to update the state
-        new_state[1:-1, 1:-1] = (state[:-2, :-2] + state[:-2, 1:-1] + state[:-2, 2:] +
-                                 state[1:-1, :-2] + state[1:-1, 2:] +
-                                 state[2:, :-2] + state[2:, 1:-1] + state[2:, 2:]) // 8
-
-        # Update the boundary cells with the nearest neighbors
-        new_state[0, :] = new_state[1, :]
-        new_state[-1, :] = new_state[-2, :]
-        new_state[:, 0] = new_state[:, 1]
-        new_state[:, -1] = new_state[:, -2]
-
-        # Swap the state and new_state arrays
-        state, new_state = new_state, state
+        state = update_state(state)
 
     return state
 
