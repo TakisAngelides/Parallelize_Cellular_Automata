@@ -20,14 +20,14 @@ def update_state(width, height, configurations_dev, iteration):
         print(x, y, configurations_dev[iteration, x, y])
         
         
-    if configurations_dev[iteration-1, x, y] == 1:  # Current cell is live
+    if configurations_dev[iteration-1, x, y] == True:  # Current cell is live
         if alive < 2 or alive > 3:
             # Any live cell with fewer than two or more than three live neighbors dies
-            configurations_dev[iteration, x, y] = 0
+            configurations_dev[iteration, x, y] = False
     else:  # Current cell is dead
         if alive == 3:
             # Any dead cell with exactly three live neighbors becomes a live cell
-            configurations_dev[iteration, x, y] = 1
+            configurations_dev[iteration, x, y] = True
     
     # configurations_dev[iteration, x, y] = int((configurations_dev[iteration-1, x, y] == 1 and (alive == 2 or alive == 3)) or (configurations_dev[iteration-1, x, y] == 0 and alive == 3))
 
@@ -36,7 +36,7 @@ def get_configurations(num_iterations, width, height):
     block_size = (1, 1)
     grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
     
-    configurations = np.empty((num_iterations + 1, width, height), dtype = int)  # Array to store configurations on CPU
+    configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
     configurations[0, :, :] = initial_state
     
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
@@ -59,16 +59,16 @@ height = 4
 num_iterations = 10
 
 # Create the initial state randomly
-initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
-# initial_state = np.zeros((width, height), dtype = int)
-# initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = 1
-# initial_state[len(initial_state)//2, initial_state.shape[0]//2] = 1
-# initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = 1
-# initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = 1
-# initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = 1
-# initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = 1
-# initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = 1
-# initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = 1
+# initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
+initial_state = np.zeros((width, height), dtype = bool)
+initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
+initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
+initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = True
+initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = True
+initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
 
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(num_iterations, width, height)
