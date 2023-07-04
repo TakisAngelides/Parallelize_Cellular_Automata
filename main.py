@@ -18,7 +18,7 @@ def update_state(width, height, configurations_dev, iteration):
     
     if iteration == 1:
         
-        print(x, y, left, right, top, bottom)
+        print(x, y, left, right, top, bottom, alive)
         
     if configurations_dev[iteration-1, x, y] == 1:  # Current cell is live
         if alive < 2 or alive > 3:
