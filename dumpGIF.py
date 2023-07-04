@@ -64,6 +64,6 @@ def dumpGIF(states, filename):
                 else:
                     ax.add_patch(plt.Rectangle((x, 0), 1, 1, edgecolor='black', facecolor='white'))
             
-    ani = animation.FuncAnimation(fig, animate, frames = len(states), interval = 4)
+    ani = animation.FuncAnimation(fig, animate, frames = len(states), interval = 0.2)
     ani.save(filename, writer='pillow')
     # plt.show()
