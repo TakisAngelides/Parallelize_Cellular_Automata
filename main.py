@@ -15,11 +15,10 @@ def update_state(state):
     return new_state
 
 @cp.fuse
-def run_cellular_automaton(initial_state, num_iterations):
+def run_cellular_automaton(initial_state):
     state = initial_state
 
-    print(type(num_iterations))
-    for _ in range(num_iterations):
+    for _ in range(2):
         state = update_state(state)
 
     return state
