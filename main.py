@@ -45,9 +45,9 @@ def get_configurations(num_iterations, width, height):
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
     for t in range(num_iterations):
-        
-        cuda.synchronize()  # Ensure all computations on GPU are completed
+
         update_state[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
+        print(t)
         cuda.synchronize()  # Ensure all computations on GPU are completed    
         
     # Copy the configurations array from GPU to CPU
