@@ -25,7 +25,7 @@ def update_state(width, height, configurations, iteration):
             # Any dead cell with exactly three live neighbors becomes a live cell
             configurations[iteration, x, y] = 1
 
-def get_configurations(num_iterations, width, height):
+def get_configurations(configurations, num_iterations, width, height):
     
     block_size = (1, 1)
     grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
@@ -62,7 +62,7 @@ initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = 1
 # Run the cellular automaton and get the configurations
 configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
 configurations[0] = initial_state
-configurations = get_configurations(num_iterations, width, height)
+configurations = get_configurations(configurations, num_iterations, width, height)
 
 print('Now calling to get the gif and save it.')
 start = datetime.now()
