@@ -26,10 +26,11 @@ def update_state(width, height, configurations, iteration):
             configurations[iteration, x, y] = 1
 
 def get_configurations(initial_state, num_iterations, width, height):
+    
     block_size = (1, 1)
     grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
 
-    configurations = np.empty((num_iterations + 1, width, height), dtype=np.uint8)  # Array to store configurations on CPU
+    configurations = np.empty((num_iterations + 1, width, height), dtype = int)  # Array to store configurations on CPU
     configurations[0] = initial_state  # Store the initial state in the configurations array
     
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
@@ -53,7 +54,7 @@ num_iterations = 10
 
 # Create the initial state randomly
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
-initial_state = np.zeros((width, height), dtype = np.uint8)
+initial_state = np.zeros((width, height), dtype = int)
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = 1
 initial_state[len(initial_state)//2, initial_state.shape[0]//2] = 1
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = 1
