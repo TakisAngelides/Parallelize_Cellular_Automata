@@ -2,8 +2,7 @@ import cupy as cp
 import matplotlib.pyplot as plt
 
 @cp.fuse
-def update_state(state):
-    new_state = cp.empty((100, 100), dtype=state.dtype)
+def update_state(state, new_state):
     height, width = 100, 100
 
     for i in range(height):
@@ -15,13 +14,13 @@ def update_state(state):
                                    state[i, j-1] + state[i, j] + state[i, j+1] +
                                    state[i+1, j-1] + state[i+1, j] + state[i+1, j+1]) // 9
 
-    return new_state
-
 def run_cellular_automaton(initial_state):
     state = initial_state
 
     for _ in range(2):
-        state = update_state(state)
+        new_state = cp.empty_like(state)
+        update_state(state, new_state)
+        state = new_state
 
     return state
 
