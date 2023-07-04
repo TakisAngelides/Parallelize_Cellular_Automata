@@ -1,21 +1,38 @@
 from numba import cuda
 import numpy as np
+import matplotlib.pyplot as plt
 
 @cuda.jit
-def increment_by_one(an_array):
-    # Thread id in a 1D block
-    tx = cuda.threadIdx.x
-    # Block id in a 1D grid
-    ty = cuda.blockIdx.x
-    # Block width, i.e. number of threads per block
-    bw = cuda.blockDim.x
-    # Compute flattened index inside the array
-    pos = tx + ty * bw
-    if pos < an_array.size:  # Check array boundaries
-        an_array[pos] += 1
+def update_state(state, new_state):
+    i = cuda.grid(1)
+    
+    if i > 0 and i < state.shape[0] - 1:
+        new_state[i] = (state[i-1] + state[i] + state[i+1]) % 2
 
-an_array = np.array([1, 2, 3])
-threadsperblock = 32
-blockspergrid = (an_array.size + (threadsperblock - 1)) // threadsperblock
-increment_by_one[blockspergrid, threadsperblock](an_array)
-print(an_array)
+def run_cellular_automaton(initial_state, num_iterations):
+    state = initial_state.copy()
+    new_state = np.empty_like(state)
+    block_size = 128
+    grid_size = (state.shape[0] + block_size - 1) // block_size
+
+    for _ in range(num_iterations):
+        update_state[grid_size, block_size](state, new_state)
+        state, new_state = new_state, state
+
+    return state
+
+# Set the size of the grid
+width = 100
+
+# Set the number of iterations
+num_iterations = 100
+
+# Create the initial state randomly
+initial_state = np.random.randint(0, 2, size=width, dtype=np.uint8)
+
+# Run the cellular automaton
+final_state = run_cellular_automaton(initial_state, num_iterations)
+
+# Plot the final state
+plt.imshow(final_state.reshape(1, -1), cmap='binary')
+plt.savefig('test.png', bbox_inches = 'tight')
