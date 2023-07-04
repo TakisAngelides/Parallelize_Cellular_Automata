@@ -1,7 +1,7 @@
 from neighbours import *
 
 @cp.fuse(kernel_name = 'apply_rules')
-def apply_rules(state : cp.ndarray) -> cp.ndarray:
+def apply_rules(state : cp.ndarray, state_shape) -> cp.ndarray:
     
     """
 
@@ -17,9 +17,9 @@ def apply_rules(state : cp.ndarray) -> cp.ndarray:
     
     """
     
-    new_state = cp.full(state.shape, 0)
+    new_state = cp.full(state_shape, 0)
     
-    dims = state.shape
+    dims = state_shape
     d = len(dims)
     
     if d == 1:
