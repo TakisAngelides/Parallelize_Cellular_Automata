@@ -7,7 +7,7 @@ def initialize_array(shape, initial_value = 0):
 
 def initialize_random_array(shape):
     
-    return cp.random.randint(0, 2, size = shape, dtype=cp.uint8)
+    return cp.random.randint(0, 2, size = shape, dtype = cp.uint8)
 
 def initialize_cellpy_array(shape):
     
