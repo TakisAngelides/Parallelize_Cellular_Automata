@@ -43,6 +43,8 @@ def get_configurations(num_iterations, width, height):
     # Copy the configurations array from GPU to CPU
     configurations = configurations_dev.copy_to_host()
     
+    return configurations
+    
 # Set the size of the grid
 width = 16
 height = 16
