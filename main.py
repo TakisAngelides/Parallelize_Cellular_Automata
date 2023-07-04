@@ -56,7 +56,7 @@ width = 16
 height = 16
 
 # Set the number of iterations
-num_iterations = 2
+num_iterations = 10
 
 # Create the initial state randomly
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
