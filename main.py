@@ -16,10 +16,10 @@ def update_state(width, height, configurations_dev, iteration):
     
     alive = configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] + configurations_dev[iteration-1, x, bottom]
     
-    if configurations_dev[iteration-1, x, y] and alive >= 2 and alive < 4:
-        configurations_dev[iteration, x, y] = True
-    if not configurations_dev[iteration-1, x, y] and alive == 3:
-        configurations_dev[iteration, x, y] = True
+    # if configurations_dev[iteration-1, x, y] and alive >= 2 and alive < 4:
+    #     configurations_dev[iteration, x, y] = True
+    # if not configurations_dev[iteration-1, x, y] and alive == 3:
+    #     configurations_dev[iteration, x, y] = True
     
     # if configurations_dev[iteration-1, x, y] == True:  # Current cell is live
     #     if alive < 2 or alive > 3:
@@ -30,7 +30,7 @@ def update_state(width, height, configurations_dev, iteration):
     #         # Any dead cell with exactly three live neighbors becomes a live cell
     #         configurations_dev[iteration, x, y] = True
         
-    # configurations_dev[iteration, x, y] = (configurations_dev[iteration-1, x, y] == 1 and (alive == 2 or alive == 3)) or (configurations_dev[iteration-1, x, y] == 0 and alive == 3)
+    configurations_dev[iteration, x, y] = (configurations_dev[iteration-1, x, y] == 1 and alive >= 2 and alive < 4 ) or (configurations_dev[iteration-1, x, y] == 0 and alive == 3)
 
 def get_configurations(num_iterations, width, height):
     
