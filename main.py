@@ -56,20 +56,19 @@ num_iterations = 10
 
 # Create the initial state randomly
 
-initial_state = np.random.choice([True, False], size = (width, height))
+# initial_state = np.random.choice([True, False], size = (width, height))
 
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
 
-# initial_state = np.zeros((width, height), dtype = bool)
-# initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
-# initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
-# initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
-# initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = True
-# initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
-# initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = True
-# initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = True
-# initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
-
+initial_state = np.zeros((width, height), dtype = bool)
+initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
+initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
+initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
+initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = True
+initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = True
+initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
 
 
 # Run the cellular automaton and get the configurations
