@@ -7,7 +7,7 @@ from dumpGIF import *
 @cuda.jit
 def update_state(width, height, configurations_dev, iteration):
     
-    y, x = cuda.grid(2)
+    x, y = cuda.grid(2)
     
     left = (x - 1 + width) % width
     right = (x + 1) % width
@@ -16,14 +16,16 @@ def update_state(width, height, configurations_dev, iteration):
     
     alive = configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] + configurations_dev[iteration-1, x, bottom]
     
-    if configurations_dev[iteration-1, x, y] == 1:  # Current cell is live
-        if alive < 2 or alive > 3:
-            # Any live cell with fewer than two or more than three live neighbors dies
-            configurations_dev[iteration, x, y] = 0
-    else:  # Current cell is dead
-        if alive == 3:
-            # Any dead cell with exactly three live neighbors becomes a live cell
-            configurations_dev[iteration, x, y] = 1
+    # if configurations_dev[iteration-1, x, y] == 1:  # Current cell is live
+    #     if alive < 2 or alive > 3:
+    #         # Any live cell with fewer than two or more than three live neighbors dies
+    #         configurations_dev[iteration, x, y] = 0
+    # else:  # Current cell is dead
+    #     if alive == 3:
+    #         # Any dead cell with exactly three live neighbors becomes a live cell
+    #         configurations_dev[iteration, x, y] = 1
+    
+    configurations_dev[iteration, x, y] = int(configurations_dev[iteration-1, x, y] == 1 and (alive == 2 or alive == 3) or (configurations_dev[iteration-1, x, y] == 0 and alive == 3))
 
 def get_configurations(num_iterations, width, height):
     
