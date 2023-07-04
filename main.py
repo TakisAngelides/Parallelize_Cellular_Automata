@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 @cp.fuse
 def update_state(state):
-    new_state = cp.empty_like(state)
+    new_state = cp.empty(state.shape, dtype=state.dtype)
     new_state[1:-1, 1:-1] = (state[:-2, :-2] + state[:-2, 1:-1] + state[:-2, 2:] +
                              state[1:-1, :-2] + state[1:-1, 2:] +
                              state[2:, :-2] + state[2:, 1:-1] + state[2:, 2:]) // 8
@@ -28,7 +28,7 @@ width = 100
 height = 100
 
 # Set the number of iterations
-num_iterations = 1
+num_iterations = 100
 
 # Create the initial state randomly
 initial_state = cp.random.randint(0, 2, size=(height, width), dtype=cp.int32)
