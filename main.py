@@ -16,16 +16,20 @@ def update_state(width, height, configurations_dev, iteration):
     
     alive = configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] + configurations_dev[iteration-1, x, bottom]
     
-    # if configurations_dev[iteration-1, x, y] == 1:  # Current cell is live
-    #     if alive < 2 or alive > 3:
-    #         # Any live cell with fewer than two or more than three live neighbors dies
-    #         configurations_dev[iteration, x, y] = 0
-    # else:  # Current cell is dead
-    #     if alive == 3:
-    #         # Any dead cell with exactly three live neighbors becomes a live cell
-    #         configurations_dev[iteration, x, y] = 1
+    if iteration == 1:
+        
+        print(x, y, left, right, top, bottom)
+        
+    if configurations_dev[iteration-1, x, y] == True:  # Current cell is live
+        if alive < 2 or alive > 3:
+            # Any live cell with fewer than two or more than three live neighbors dies
+            configurations_dev[iteration, x, y] = False
+    else:  # Current cell is dead
+        if alive == 3:
+            # Any dead cell with exactly three live neighbors becomes a live cell
+            configurations_dev[iteration, x, y] = True
     
-    configurations_dev[iteration, x, y] = int((configurations_dev[iteration-1, x, y] == 1 and (alive == 2 or alive == 3)) or (configurations_dev[iteration-1, x, y] == 0 and alive == 3))
+    # configurations_dev[iteration, x, y] = int((configurations_dev[iteration-1, x, y] == 1 and (alive == 2 or alive == 3)) or (configurations_dev[iteration-1, x, y] == 0 and alive == 3))
 
 def get_configurations(num_iterations, width, height):
     
@@ -33,7 +37,7 @@ def get_configurations(num_iterations, width, height):
     grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
     
     configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
-    configurations[0] = initial_state
+    configurations[0, :, :] = initial_state
     
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
