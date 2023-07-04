@@ -60,7 +60,7 @@ width = 16
 height = 16
 
 # Set the number of iterations
-num_iterations = 3
+num_iterations = 100
 
 # Create the initial state
 initial_state = np.zeros((width, height), dtype = bool)
