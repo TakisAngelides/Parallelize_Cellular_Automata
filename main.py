@@ -5,25 +5,25 @@ from datetime import datetime
 from dumpGIF import *
 
 @cuda.jit
-def update_state(width, height, configurations, iteration):
+def update_state(width, height, configurations_dev, iteration):
     
-    x, y = cuda.grid(2)
+    y, x = cuda.grid(2)
     
     left = (x - 1 + width) % width
     right = (x + 1) % width
     top = (y - 1 + height) % height
     bottom = (y + 1) % height
     
-    alive = configurations[iteration-1, left, y] + configurations[iteration-1, right, y] + configurations[iteration-1, x, top] + configurations[iteration-1, x, bottom]
+    alive = configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] + configurations_dev[iteration-1, x, bottom]
     
-    if configurations[iteration-1, x, y] == 1:  # Current cell is live
+    if configurations_dev[iteration-1, x, y] == 1:  # Current cell is live
         if alive < 2 or alive > 3:
             # Any live cell with fewer than two or more than three live neighbors dies
-            configurations[iteration, x, y] = 0
+            configurations_dev[iteration, x, y] = 0
     else:  # Current cell is dead
         if alive == 3:
             # Any dead cell with exactly three live neighbors becomes a live cell
-            configurations[iteration, x, y] = 1
+            configurations_dev[iteration, x, y] = 1
 
 def get_configurations(num_iterations, width, height):
     
