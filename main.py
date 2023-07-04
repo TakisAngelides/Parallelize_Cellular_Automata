@@ -40,4 +40,4 @@ final_state_np = cp.asnumpy(final_state)
 
 # Plot the final state
 plt.imshow(final_state_np, cmap='binary')
-plt.show()
+plt.savefig('test.png', bbox_inches = 'tight')
