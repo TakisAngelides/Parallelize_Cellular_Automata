@@ -16,7 +16,7 @@ def update_state(state, new_state, width, height, configurations, iteration):
     
     new_state[i, j] = (state[i, left] + state[i, right] + state[top, j] + state[bottom, j]) % 2
     
-    configurations[i, j, iteration] = new_state[i, j]  # Save the current state in the configurations array
+    configurations[iteration, i, j] = new_state[i, j]  # Save the current state in the configurations array
 
 def get_configurations(initial_state, num_iterations, width, height):
     block_size = (1, 1)
@@ -24,8 +24,8 @@ def get_configurations(initial_state, num_iterations, width, height):
 
     state_dev = cuda.to_device(initial_state)  # Copy the initial state to the GPU
     new_state_dev = cuda.device_array_like(state_dev)
-    configurations = np.empty((width, height, num_iterations + 1), dtype=np.uint8)  # Array to store configurations on CPU
-    configurations[:, :, 0] = initial_state  # Store the initial state in the configurations array
+    configurations = np.empty((num_iterations + 1, width, height), dtype=np.uint8)  # Array to store configurations on CPU
+    configurations[0] = initial_state  # Store the initial state in the configurations array
     
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
@@ -47,15 +47,15 @@ height = 16
 num_iterations = 5
 
 # Create the initial state randomly
-initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
+initial_state = np.random.randint(0, 2, size=(width, height), dtype=np.uint8)
 
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(initial_state, num_iterations, width, height)
 
-# # Plot the final state (last configuration)
-# final_state = configurations[:, :, -1]
-# plt.imshow(final_state, cmap='binary')
-# plt.savefig('test.png', bbox_inches='tight')
+# Plot the final state (last configuration)
+final_state = configurations[-1]
+plt.imshow(final_state, cmap='binary')
+plt.savefig('test.png', bbox_inches='tight')
 
 print('Now calling to get the gif and save it.')
 start = datetime.now()
