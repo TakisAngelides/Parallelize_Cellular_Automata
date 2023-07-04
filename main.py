@@ -41,7 +41,7 @@ def run_cellular_automaton(initial_state, num_iterations, width, height):
     # The same logic applies to the second dimension of the state array when calculating the grid size in the Y dimension.
     
     block_size = (1, 1)
-    grid_size = ((state.shape[0] + block_size[0] - 1) // block_size[0], (state.shape[1] + block_size[1] - 1) // block_size[1])
+    grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
 
     state = initial_state.copy()
     new_state = np.empty_like(state)
