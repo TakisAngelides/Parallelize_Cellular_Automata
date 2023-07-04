@@ -30,7 +30,7 @@ def update_state(width, height, configurations_dev, iteration):
     #         # Any dead cell with exactly three live neighbors becomes a live cell
     #         configurations_dev[iteration, x, y] = True
         
-    configurations_dev[iteration, x, y] = (configurations_dev[iteration-1, x, y] == True and alive >= 2 and alive < 4) or (configurations_dev[iteration-1, x, y] == False and alive == 3)
+    configurations_dev[iteration, x, y] = (configurations_dev[iteration-1, x, y] and alive >= 2 and alive < 4) or (not configurations_dev[iteration-1, x, y] and alive == 3)
 
 def get_configurations(num_iterations, width, height):
     
@@ -39,7 +39,7 @@ def get_configurations(num_iterations, width, height):
     
     configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
     configurations[0, :, :] = initial_state
-    
+        
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
     for t in range(num_iterations):
