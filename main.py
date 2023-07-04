@@ -2,7 +2,23 @@ from numba import cuda
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
-from dumpGIF import *
+import matplotlib.animation as animation
+
+def dumpGIF(states, filename):
+    
+    fig = plt.figure()
+    ax = fig.add_subplot()
+        
+    def animate(frame):
+        
+        ax.clear()
+        ax.set_title(f"Iteration: {frame}")
+        ax.imshow(states[frame], cmap = 'binary')
+        ax.set_xticks([])
+        ax.set_yticks([])
+    
+    ani = animation.FuncAnimation(fig, animate, frames = len(states), interval = 200)
+    ani.save(filename, writer='pillow')
 
 @cuda.jit
 def update_state(width, height, configurations_dev, iteration):
@@ -29,7 +45,7 @@ def update_state(width, height, configurations_dev, iteration):
 
 def get_configurations(num_iterations, width, height):
     
-    block_size = (1, 1)
+    block_size = (16, 16)
     grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
     
     configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
