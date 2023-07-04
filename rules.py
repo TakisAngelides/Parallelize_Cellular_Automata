@@ -19,8 +19,8 @@ def apply_rules(state : cp.ndarray) -> cp.ndarray:
     
     new_state = cp.full(state.shape, 0)
     
-    d = len(state.shape)
     dims = state.shape
+    d = len(dims)
     
     if d == 1:
         
@@ -35,33 +35,33 @@ def apply_rules(state : cp.ndarray) -> cp.ndarray:
             if not current_cell_value and alive == 2:
                 new_state[i]= 1
         
-    elif d == 2:
+    # elif d == 2:
         
-        for i in prange(dims[0]):
-            for j in prange(dims[1]):
+    #     for i in prange(dims[0]):
+    #         for j in prange(dims[1]):
     
-                current_cell_value = state[i, j]
+    #             current_cell_value = state[i, j]
         
-                alive : int = count_alive_neighbours(cp.array([i, j]), state)
+    #             alive : int = count_alive_neighbours(cp.array([i, j]), state)
                 
-                if current_cell_value and alive >= 2 and alive < 4:
-                    new_state[i, j] = True
-                if not current_cell_value and alive == 3:
-                    new_state[i, j]= True
+    #             if current_cell_value and alive >= 2 and alive < 4:
+    #                 new_state[i, j] = True
+    #             if not current_cell_value and alive == 3:
+    #                 new_state[i, j]= True
     
-    elif d == 3:
+    # elif d == 3:
         
-        for i in prange(dims[0]):
-            for j in prange(dims[1]):
-                for k in prange(dims[2]):
+    #     for i in prange(dims[0]):
+    #         for j in prange(dims[1]):
+    #             for k in prange(dims[2]):
     
-                    current_cell_value = state[i, j, k]
+    #                 current_cell_value = state[i, j, k]
             
-                    alive : int = count_alive_neighbours(cp.array([i, j, k]), state)
+    #                 alive : int = count_alive_neighbours(cp.array([i, j, k]), state)
                     
-                    if current_cell_value and alive >= 9 and alive < 23:
-                        new_state[i, j, k] = True
-                    if not current_cell_value and alive == 3:
-                        new_state[i, j, k]= True
+    #                 if current_cell_value and alive >= 9 and alive < 23:
+    #                     new_state[i, j, k] = True
+    #                 if not current_cell_value and alive == 3:
+    #                     new_state[i, j, k]= True
                 
     return new_state

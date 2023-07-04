@@ -10,6 +10,8 @@ numba.set_num_threads(1)
 print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
 
 def get_configurations(configurations_shape, initial_state):
+    
+    start = datetime.now()
 
     configurations = cp.full(configurations_shape, 0)
 
@@ -21,7 +23,12 @@ def get_configurations(configurations_shape, initial_state):
         state = apply_rules(state)
         configurations[t] = state
         
-    return configurations
+    print(f'Time taken to calculate the configurations on GPU is {datetime.now()-start}. (Does not account for GPU back to CPU transfer time)', flush = True)
+    
+    # Transfer from gpu to cpu the configurations
+    configurations_cpu = cp.asnumpy(configurations)
+        
+    return configurations_cpu
         
 
 time_steps = 10000
@@ -30,9 +37,7 @@ shape = [1000]
 initial_state = initialize_random_array(shape)
 configurations_shape = tuple([time_steps] + shape)
 print(f'Have written the initial state with shape {shape} and now calling to get configurations for {time_steps} time steps.', flush = True)
-start = datetime.now()
 configurations = get_configurations(configurations_shape, initial_state)
-print(f'Time taken to get configurations is {datetime.now()-start}.', flush = True)
 
 # print('Now calling to get the gif and save it.')
 # start = datetime.now()
