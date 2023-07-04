@@ -24,7 +24,9 @@ def get_configurations(initial_state, num_iterations, width, height):
     new_state = np.empty_like(state)
     configurations = np.empty((width, height, num_iterations), dtype=np.uint8)  # Array to store configurations on CPU
     
+    print('test_1')
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
+    print('test_2')
     
     for i in range(num_iterations):
         update_state[grid_size, block_size](state, new_state, width, height, configurations_dev, i) # on GPU 
@@ -33,8 +35,9 @@ def get_configurations(initial_state, num_iterations, width, height):
     cuda.synchronize()  # Ensure all computations on GPU are completed
     
     # Copy the configurations array from GPU to CPU
-    print('test')
+    print('test_3')
     configurations = configurations_dev.copy_to_host()
+    print('test_4')
     
     return configurations
 
