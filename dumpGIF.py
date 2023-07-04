@@ -42,7 +42,6 @@ def dumpGIF(states, filename):
             
             ax.clear()
             ax.set_title(f"Iteration: {frame}")
-            print(states[frame])
             ax.imshow(states[frame], cmap = 'binary')
             ax.set_xticks([])
             ax.set_yticks([])
