@@ -2,7 +2,7 @@ import cupy as cp
 import matplotlib.pyplot as plt
 
 def update_state(state):
-    new_state = cp.empty(state.shape, dtype=state.dtype)
+    new_state = cp.empty((100, 100), dtype=state.dtype)
     new_state[1:-1, 1:-1] = (state[:-2, :-2] + state[:-2, 1:-1] + state[:-2, 2:] +
                              state[1:-1, :-2] + state[1:-1, 2:] +
                              state[2:, :-2] + state[2:, 1:-1] + state[2:, 2:]) // 8
