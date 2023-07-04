@@ -60,7 +60,7 @@ num_iterations = 100
 
 # Create the initial state randomly
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
-initial_state = np.zeros(size=(width, height), dtype = np.uint8)
+initial_state = np.zeros((width, height), dtype = np.uint8)
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = 1
 initial_state[len(initial_state)//2, initial_state.shape[0]//2] = 1
 initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = 1
