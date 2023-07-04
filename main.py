@@ -15,22 +15,17 @@ def update_state(width, height, configurations_dev, iteration):
     bottom = (y + 1) % height
     
     alive = configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] + configurations_dev[iteration-1, x, bottom]
-    
-    # if configurations_dev[iteration-1, x, y] and alive >= 2 and alive < 4:
-    #     configurations_dev[iteration, x, y] = True
-    # if not configurations_dev[iteration-1, x, y] and alive == 3:
-    #     configurations_dev[iteration, x, y] = True
-    
-    # if configurations_dev[iteration-1, x, y] == True:  # Current cell is live
-    #     if alive < 2 or alive > 3:
-    #         # Any live cell with fewer than two or more than three live neighbors dies
-    #         configurations_dev[iteration, x, y] = False
-    # else:  # Current cell is dead
-    #     if alive == 3:
-    #         # Any dead cell with exactly three live neighbors becomes a live cell
-    #         configurations_dev[iteration, x, y] = True
         
-    configurations_dev[iteration, x, y] = (configurations_dev[iteration-1, x, y] and alive >= 2 and alive < 4) or (not configurations_dev[iteration-1, x, y] and alive == 3)
+    if configurations_dev[iteration-1, x, y] == True:  # Current cell is live
+        # Any live cell with fewer than two or more than three live neighbors dies
+        if alive < 2 or alive > 3:
+            configurations_dev[iteration, x, y] = False
+    else:  # Current cell is dead
+        if alive == 3:
+            # Any dead cell with exactly three live neighbors becomes a live cell
+            configurations_dev[iteration, x, y] = True
+        
+    # configurations_dev[iteration, x, y] = (configurations_dev[iteration-1, x, y] and alive >= 2 and alive < 4) or (not configurations_dev[iteration-1, x, y] and alive == 3)
 
 def get_configurations(num_iterations, width, height):
     
@@ -60,16 +55,22 @@ height = 16
 num_iterations = 10
 
 # Create the initial state randomly
+
+initial_state = np.random.choice([True, False], size = (width, height))
+
 # initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
-initial_state = np.zeros((width, height), dtype = bool)
-initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
-initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
-initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
-initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = True
-initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
-initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = True
-initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = True
-initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
+
+# initial_state = np.zeros((width, height), dtype = bool)
+# initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
+# initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
+# initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
+# initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+1] = True
+# initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+1] = True
+# initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)+2] = True
+# initial_state[(len(initial_state)//2)-2, (initial_state.shape[0]//2)+2] = True
+# initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
+
+
 
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(num_iterations, width, height)
