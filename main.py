@@ -64,7 +64,7 @@ num_iterations = 1
 initial_state = np.random.randint(0, 2, size = (width, height), dtype = np.uint8)
 
 # Run the cellular automaton
-final_state = get_configurations(initial_state, num_iterations, width, height)
+final_state = get_configurations[1, 1](initial_state, num_iterations, width, height)
 
 # Plot the final state
 plt.imshow(final_state, cmap='binary')
