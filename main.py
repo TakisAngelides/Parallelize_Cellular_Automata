@@ -14,8 +14,17 @@ def update_state(state, new_state, width, height, configurations, iteration):
     top = (i - 1 + height) % height
     bottom = (i + 1) % height
     
-    new_state[i, j] = (state[i, left] + state[i, right] + state[top, j] + state[bottom, j]) % 2
+    alive = state[i, left] + state[i, right] + state[top, j] + state[bottom, j]
     
+    if state[i, j] == 1:  # Current cell is live
+        if alive < 2 or alive > 3:
+            # Any live cell with fewer than two or more than three live neighbors dies
+            new_state[i, j] = 0
+    else:  # Current cell is dead
+        if alive == 3:
+            # Any dead cell with exactly three live neighbors becomes a live cell
+            new_state[i, j] = 1
+
     configurations[iteration, i, j] = new_state[i, j]  # Save the current state in the configurations array
 
 def get_configurations(initial_state, num_iterations, width, height):
