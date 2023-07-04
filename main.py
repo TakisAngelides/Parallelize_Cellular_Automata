@@ -34,8 +34,6 @@ def update_state(width, height, configurations_dev, iteration):
              
     configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
     
-    cuda.synchronize()  # Ensure all computations on GPU are completed 
-
 def get_configurations(num_iterations, width, height):
     
     block_size = (1, 1)
@@ -48,6 +46,7 @@ def get_configurations(num_iterations, width, height):
     
     for t in range(num_iterations):
         
+        cuda.synchronize()  # Ensure all computations on GPU are completed
         update_state[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
         cuda.synchronize()  # Ensure all computations on GPU are completed    
         
