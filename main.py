@@ -16,11 +16,10 @@ def update_state(state, new_state, width, height, configurations, iteration):
     configurations[i, j, iteration] = new_state[i, j]  # Save the current state in the configurations array
 
 def get_configurations(initial_state, num_iterations, width, height):
-    
-    block_size = (16, 16)  # number of threads in a single block
-    grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1]) # number of blocks in the 2 dimensions
+    block_size = (16, 16)  # Adjust the block size as per your preference
+    grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
 
-    state = initial_state.copy()
+    state = np.ascontiguousarray(initial_state)  # Create a contiguous copy of the initial state
     new_state = np.empty_like(state)
     configurations = cuda.device_array((width, height, num_iterations), dtype=np.uint8)  # Array to store configurations on GPU
     
