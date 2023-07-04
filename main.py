@@ -15,9 +15,6 @@ def update_state(state, new_state, width, height):
     new_state[i, j] = (state[i, left] + state[i, right] + state[top, j] + state[bottom, j]) % 2
 
 def run_cellular_automaton(initial_state, num_iterations, width, height):
-    state = initial_state.copy()
-    new_state = np.empty_like(state)
-    block_size = (width, height)
     
     # The grid is the grid of blocks where each block contains threads arranged in a two dimensional grid
     
@@ -43,7 +40,11 @@ def run_cellular_automaton(initial_state, num_iterations, width, height):
     # By performing integer division (state.shape[0] + block_size[0] - 1) // block_size[0], we obtain 131 // 32 = 4. This means that we need 4 blocks in the first dimension to cover the rows of the state array.
     # The same logic applies to the second dimension of the state array when calculating the grid size in the Y dimension.
     
+    block_size = (1, 1)
     grid_size = ((state.shape[0] + block_size[0] - 1) // block_size[0], (state.shape[1] + block_size[1] - 1) // block_size[1])
+
+    state = initial_state.copy()
+    new_state = np.empty_like(state)
 
     for _ in range(num_iterations):
         update_state[grid_size, block_size](state, new_state, width, height)
