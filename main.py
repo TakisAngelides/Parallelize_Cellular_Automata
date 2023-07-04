@@ -4,12 +4,22 @@ import matplotlib.pyplot as plt
 
 @cuda.jit
 def update_state(state, new_state):
+    
+    """
+    
+    # Define the kernel to run on GPU
+    # This is called num_iteration number of times and each thread takes care of updating the corresponding index in new_state
+    
+    """
+    
     i = cuda.grid(1)
+    print(i)
     
     if i > 0 and i < state.shape[0] - 1:
         new_state[i] = (state[i-1] + state[i] + state[i+1]) % 2
 
 def run_cellular_automaton(initial_state, num_iterations):
+    
     state = initial_state.copy()
     new_state = np.empty_like(state)
     block_size = 128
