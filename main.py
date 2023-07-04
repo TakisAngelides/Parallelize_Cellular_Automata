@@ -13,12 +13,12 @@ def get_configurations(configurations_shape, initial_state):
     
     start = datetime.now()
 
-    configurations = cp.full(configurations_shape, 0)
+    configurations = cp.full(configurations_shape, 0, dtype = cp.uint8)
 
     configurations[0] = initial_state
 
     state = initial_state
-    state_shape = state.shape[0]
+    state_shape = len(state)
     for t in range(1, time_steps):
         print(f'Running time step {t} starting at {datetime.now()}', flush = True)
         state = apply_rules_1d(state, state_shape)

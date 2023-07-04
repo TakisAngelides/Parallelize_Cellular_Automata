@@ -5,9 +5,9 @@ def initialize_array(shape, initial_value = 0):
     
     return cp.full(shape, initial_value)
 
-def initialize_random_array(shape, values = [0, 1], p = [0.5, 0.5]):
+def initialize_random_array(shape):
     
-    return cp.random.choice(values, size = shape, p = p)
+    return cp.random.randint(0, 2, size = shape, dtype=cp.uint8)
 
 def initialize_cellpy_array(shape):
     
