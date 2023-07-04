@@ -33,6 +33,7 @@ def get_configurations(initial_state, num_iterations, width, height):
     cuda.synchronize()  # Ensure all computations on GPU are completed
     
     # Copy the configurations array from GPU to CPU
+    print('test')
     configurations = configurations_dev.copy_to_host()
     
     return configurations
