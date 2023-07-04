@@ -21,21 +21,18 @@ def get_configurations(initial_state, num_iterations, width, height):
 
     state = np.ascontiguousarray(initial_state)  # Create a contiguous copy of the initial state
     new_state = np.empty_like(state)
-    configurations = cuda.device_array((width, height, num_iterations), dtype=np.uint8)  # Array to store configurations on GPU
+    configurations = np.empty((width, height, num_iterations), dtype=np.uint8)  # Array to store configurations on CPU
     
-    cuda.synchronize()  # Ensure previous operations on GPU are completed before copying data
+    configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
-    # Copy initial state to the configurations array on GPU
-    cuda.to_device(state, to=configurations[:, :, 0])
-    
-    for i in range(1, num_iterations):
-        update_state[grid_size, block_size](state, new_state, width, height, configurations, i) # on GPU 
+    for i in range(num_iterations):
+        update_state[grid_size, block_size](state, new_state, width, height, configurations_dev, i) # on GPU 
         state, new_state = new_state, state
     
-    cuda.synchronize()  # Ensure all computations on GPU are completed before copying data
+    cuda.synchronize()  # Ensure all computations on GPU are completed
     
     # Copy the configurations array from GPU to CPU
-    configurations = configurations.copy_to_host()
+    configurations = configurations_dev.copy_to_host()
     
     return configurations
 
