@@ -49,11 +49,11 @@ def get_configurations(initial_state, num_iterations, width, height):
     return configurations
 
 # Set the size of the grid
-width = 32
-height = 32
+width = 20
+height = 20
 
 # Set the number of iterations
-num_iterations = 100
+num_iterations = 50
 
 # Create the initial state randomly
 initial_state = np.random.randint(0, 2, size=(width, height), dtype=np.uint8)
