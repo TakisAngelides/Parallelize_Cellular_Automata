@@ -6,6 +6,7 @@ from dumpGIF import *
 
 @cuda.jit
 def update_state(state, new_state, width, height, configurations, iteration):
+    
     i, j = cuda.grid(2)
     
     left = (j - 1 + width) % width
@@ -28,8 +29,8 @@ def get_configurations(initial_state, num_iterations, width, height):
     
     configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
     
-    for i in range(num_iterations):
-        update_state[grid_size, block_size](state_dev, new_state_dev, width, height, configurations_dev, i + 1) # on GPU
+    for t in range(num_iterations):
+        update_state[grid_size, block_size](state_dev, new_state_dev, width, height, configurations_dev, t + 1) # on GPU
     
     cuda.synchronize()  # Ensure all computations on GPU are completed
     
@@ -46,7 +47,7 @@ height = 16
 num_iterations = 5
 
 # Create the initial state randomly
-initial_state = np.random.randint(0, 2, size=(width, height), dtype=np.uint8)
+initial_state = np.random.randint(0, 2, size=(width, height), dtype = np.uint8)
 
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(initial_state, num_iterations, width, height)
