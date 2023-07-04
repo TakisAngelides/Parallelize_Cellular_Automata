@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 def update_state(state, new_state, width, height, configurations, iteration):
     
     i, j = cuda.grid(2) # thread id 
-    print(i, j)
     
     left = (j - 1 + width) % width
     right = (j + 1) % width
