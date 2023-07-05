@@ -24,7 +24,7 @@ def get_initial_state(shape, which_rules):
 
     if (which_rules == 'clouds_1'):
         initial_state = np.zeros(shape, dtype=bool)
-        initial_state = np.random.choice([True,False],shape, p = [0.47,0.53])
+        initial_state = np.random.choice([True,False],shape, p = [0.45,0.55])
         return initial_state
 
     if (which_rules == 'builder_II'):
