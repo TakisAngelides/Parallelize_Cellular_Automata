@@ -81,7 +81,7 @@ def get_configurations(num_iterations, shape):
 
 shape = (16,16)
 
-# Which rule can only be '54' for 1D, 'game_of_life' for 2D, 'clouds_I' for 3D
+# which_rules can be '54' for 1D, 'game_of_life' for 2D, 'clouds_I' for 3D
 which_rules = 'game_of_life'
 
 # Set the number of iterations
