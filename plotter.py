@@ -23,6 +23,7 @@ for element in os.listdir('Timing_Results/main_timed'):
 
 
 df = df.groupby(['d', 'time', 'N', 'rules'])['duration'].mean()
+print(df)
 d_tmp = df[(df.N == 64) & (df.d == 3) & (df.rules == 'clouds')]
 
 x = d_tmp.time
