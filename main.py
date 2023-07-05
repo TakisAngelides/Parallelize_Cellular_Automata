@@ -1,7 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from datetime import datetime
-import matplotlib.animation as animation
+from init_state import *
 from dumpGIF import *
 from update_state import *
 
@@ -9,7 +7,7 @@ def get_configurations(num_iterations, shape):
     d = len(shape)
     
     if d == 1 :
-        width = shape
+        width = shape[0]
         block_size = 1
         grid_size = (width + block_size - 1) // block_size
     
@@ -78,8 +76,8 @@ def get_configurations(num_iterations, shape):
         return configurations
         
 # Set the size of the grid
-
-shape = (16,16)
+L = 16
+shape = (L, L, L)
 
 # which_rules can be '54' for 1D, 'game_of_life' for 2D, 'clouds_I' for 3D
 which_rules = 'game_of_life'
