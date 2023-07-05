@@ -22,7 +22,7 @@ def get_initial_state(shape, which_rules):
         initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
         return initial_state
 
-    if (which_rules == 'clouds_1'):
+    if (which_rules == 'clouds_I'):
         initial_state = np.zeros(shape, dtype=bool)
         initial_state = np.random.choice([True,False],shape, p = [0.45,0.55])
         return initial_state
