@@ -12,6 +12,7 @@ for element in os.listdir('Timing_Results/main_timed'):
     file_parts = split_parts[-1].split(".")
     split_parts[-1:] = file_parts[:-1] + ["builder_" + file_parts[-1]]
     
+    print(split_parts)
     d, time, N, trial, rules = split_parts
     
     with open(f'Timing_Results/main_timed/{element}', 'r') as f:
