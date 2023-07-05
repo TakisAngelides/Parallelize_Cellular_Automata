@@ -35,10 +35,10 @@ def get_configurations(items):
     with open(f'Timing_Results/main_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
         f.write(duration)
 
-trial_num = 5
-time_steps_list = [10, 20]
-N_list = [10, 20]
-which_rules_list = ['54', '90', 'game_of_life', 'tumor_growth', 'clouds_I', 'builder_II']
+trial_num = 1
+time_steps_list = [10]
+N_list = [4]
+which_rules_list = ['54'] # , '90', 'game_of_life', 'tumor_growth', 'clouds_I', 'builder_II']
 process_items = []
 
 for i in range(trial_num):
@@ -53,11 +53,11 @@ for i in range(trial_num):
                 else:
                     shape = (N, N, N)
                 
-                initial_state = get_initial_state(shape, which_rules)    
+                initial_state = get_initial_state(shape, which_rules)  
                 
                 process_items.append([time_steps, initial_state, which_rules, trial_num])
 
-pool = multiprocessing.Pool()
+pool = multiprocessing.Pool(processes = 1)
 results = pool.map(get_configurations, process_items)       
 pool.close()
 pool.join() 
