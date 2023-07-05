@@ -15,7 +15,7 @@ for element in os.listdir('Timing_Results/main_timed'):
     rules = row[4]
     
     with open(f'Timing_Results/main_timed/{element}', 'r') as f:
-        duration = f.read()
+        duration = float(f.read())
 
     data_tmp = [d, time, N, trial, rules, duration]
     df_tmp = pd.DataFrame([data_tmp], columns = columns)
