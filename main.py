@@ -3,7 +3,7 @@ from init_state import *
 from dumpGIF import *
 from update_state import *
 
-def get_configurations(num_iterations, shape):
+def get_configurations(num_iterations, shape, which_rules):
     d = len(shape)
     
     if d == 1 :
@@ -101,7 +101,7 @@ num_iterations = 100
 initial_state = get_initial_state(shape, which_rules)
 
 # Run the cellular automaton and get the configurations
-configurations = get_configurations(num_iterations, shape)
+configurations = get_configurations(num_iterations, shape, which_rules)
 
 print('Now calling to get the gif and save it.')
 start = datetime.now()
