@@ -1,32 +1,36 @@
 from neighbours import *
 
 @njit()
-def apply_rules(state : np.ndarray) -> np.ndarray:
-    
-    """
-
-    Inputs:
-    
-        state : d-dimensional numpy array specifying the state of the cellular automata, the value at each element is boolean-like
-
-    The function trivially iterates over all cells and applies the Clouds 1 rule (see https://softologyblog.wordpress.com/2019/12/28/3d-cellular-automata-3/)
-    
-    Returns:
-    
-        new_state : d-dimensional numpy array specifying the state of the cellular automata after 1 time evolution of rules, the value at each element is boolean-like
-    
-    """
-    
+def apply_rules(state : np.ndarray, which_rules : str) -> np.ndarray:
+        
     new_state = np.full(state.shape, False)
     
     for site_index, current_cell_value in np.ndenumerate(state):
     
-        alive : int = count_alive_neighbours(site_index, state)
+        alive = count_alive_neighbours(site_index, state)
         
-        if current_cell_value and alive >= 2 and alive < 4:
-            new_state[site_index] = True
-        if not current_cell_value and alive == 3:
-            new_state[site_index]= True
+        if which_rules == '54':
+
+            new_state[site_index] = ((current_cell_value == True and alive == 0 ) or (current_cell_value == False and alive > 0))
+
+        if which_rules == '90':
+
+            new_state[site_index] = ((current_cell_value == True and alive == 1 ) or (current_cell_value == False and alive == 1))
+
+        if which_rules == 'game_of_life':
+
+            new_state[site_index] = ((current_cell_value) and ((alive == 2) or (alive == 3))) or ((not current_cell_value) and (alive == 3))
+
+        if which_rules == 'tumor_growth':
+
+            new_state[site_index] = (current_cell_value == True or (current_cell_value == False and alive >= 3 and np.random.rand() < 0.2))
+
+        if which_rules == 'clouds_I':
+
+            new_state[site_index] = (current_cell_value == True and alive <= 26 and alive >= 13) or (current_cell_value == False and ((alive <= 14 and alive >=13) or (alive <= 19 and alive >=17)))
+
+        if which_rules == 'builder_II':
+
+            new_state[site_index] = ((current_cell_value == True and alive <= 26 and alive >= 13) or (current_cell_value == False and alive ==1))
     
-                
     return new_state
