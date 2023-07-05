@@ -1,5 +1,6 @@
 import cellpylib as cpl
 import cupy as cp
+import numpy as np
 
 def initialize_array(shape, initial_value = 0):
     
