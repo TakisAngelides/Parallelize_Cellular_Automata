@@ -23,7 +23,7 @@ for element in os.listdir('Timing_Results/main_timed'):
     df = pd.concat([df, df_tmp], ignore_index=True)
 
 
-df_std = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].std()
+# df_std = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].std()
 df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 
 for N in list(df.N):
@@ -31,13 +31,14 @@ for N in list(df.N):
         for rules in list(df.rules):
                         
             d_tmp = df[(df.N == N) & (df.d == d) & (df.rules == rules)]
-            d_std_tmp = df_std[(df.N == N) & (df.d == d) & (df.rules == rules)]
+            # d_std_tmp = df_std[(df.N == N) & (df.d == d) & (df.rules == rules)]
 
             x = d_tmp.time
             y = d_tmp.duration
-            yerr = d_std_tmp.duration
+            # yerr = d_std_tmp.duration
             
-            plt.errorbar(x, y, yerr = yerr, fmt = 'x')
+            # plt.errorbar(x, y, yerr = yerr, fmt = 'x')
+            plt.plot(x, y, 'x')
             plt.ylabel('Duration (s)')
             plt.xlabel('Evolution Steps')
             plt.savefig(f'Plots/main_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
