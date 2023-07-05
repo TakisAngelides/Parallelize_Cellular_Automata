@@ -34,8 +34,8 @@ def get_configurations(items):
         f.write(duration)
 
 trial_num = 5
-time_steps_list = [10, 100, 1000]
-N_list = [10, 100, 1000]
+time_steps_list = [10, 20]
+N_list = [10, 20]
 which_rules_list = ['54', '90', 'game_of_life', 'tumor_growth', 'clouds_I', 'builder_II']
 process_items = []
 
