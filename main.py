@@ -12,6 +12,8 @@ def get_configurations(items):
     N = shape[0]
     d = len(shape)
 
+    print(d, N, which_rules, trial_num, datetime.now(), flush = True)
+
     start = datetime.now()
 
     configurations = np.full(tuple(np.append(time_steps, initial_state.shape)), None, dtype=initial_state.dtype)
