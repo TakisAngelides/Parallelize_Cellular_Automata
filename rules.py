@@ -1,11 +1,11 @@
 from neighbours import *
 
+#@njit(parallel=True) enables Numba's Just-in-Time (JIT) compilation and parallel execution for the apply_rules function.
 @njit(parallel = True)
+
 def apply_rules(state : np.ndarray) -> np.ndarray:
     
     """
-
-
     Inputs:
     
         state : d-dimensional numpy array specifying the state of the cellular automata, the value at each element is boolean-like
@@ -15,7 +15,6 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     Returns:
     
         new_state : d-dimensional numpy array specifying the state of the cellular automata after 1 time evolution of rules, the value at each element is boolean-like
-    
     """
     
     new_state = np.full(state.shape, False)
