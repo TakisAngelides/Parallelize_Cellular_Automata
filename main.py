@@ -33,7 +33,7 @@ def get_configurations(items):
     duration = end - start
     
     with open(f'Timing_Results/main_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
-        f.write(duration)
+        f.write(f'{duration}')
 
 trial_num = 1
 time_steps_list = [10]
