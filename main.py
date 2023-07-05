@@ -23,14 +23,14 @@ def get_configurations(time_steps, initial_state):
         Numpy array of size time_steps x initial_state.shape
         
 
-    """"
+    """
     #initialize configurations as numpy array of shape time_steps x initial_state.shape and with None entry
     configurations = np.full(tuple(np.append(time_steps, initial_state.shape)), None, dtype=initial_state.dtype)
 
     #first timeslice of configurations equals initial_state
     configurations[0] = initial_state
 
-    #from the state the state of the next timeslice will be determined
+    #from state the state of the next timeslice will be determined
     state = initial_state
 
     #loop to create timeslices in configurations
