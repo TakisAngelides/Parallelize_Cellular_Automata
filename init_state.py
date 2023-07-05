@@ -23,6 +23,10 @@ def initialize_glider(shape):
     return initial_state
 
 def initialize_two_glider_octomino(shape):
+
+    """
+    Gives the pattern glider, it evolves indefintltey 
+    """
     
     initial_state = np.zeros(shape)
     
@@ -36,3 +40,95 @@ def initialize_two_glider_octomino(shape):
     initial_state[(len(initial_state)//2)+1, initial_state.shape[0]//2] = True
     
     return initial_state
+
+
+def initialize_glider(shape):
+
+    """
+    Gives the pattern glider, it evolves indefintltey 
+    """
+    
+    initial_state = np.zeros(shape)
+
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
+    initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
+    initial_state[(len(initial_state)//2)-1, initial_state.shape[0]//2] = True
+    initial_state[(len(initial_state)//2)-2, initial_state.shape[0]//2] = True
+    initial_state[len(initial_state)//2-1, (initial_state.shape[0]//2)-2] = True
+
+
+    return initial_state
+
+
+def initialize_glider_gun(shape):
+    """
+    I need at least a 80 times 80 grid.
+
+    Gives the pattern gliderent gun and evolves indefinetly 
+    """
+
+
+    initial_state = np.zeros(shape)
+
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
+    initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
+    initial_state[(len(initial_state)//2)-1, initial_state.shape[0]//2] = True
+    initial_state[(len(initial_state)//2)-1, initial_state.shape[0]//2-1] = True
+
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+9] = True
+    initial_state[len(initial_state)//2-1, (initial_state.shape[0]//2)+9] = True
+    initial_state[len(initial_state)//2+1, (initial_state.shape[0]//2)+9] = True
+
+    initial_state[len(initial_state)//2+2, (initial_state.shape[0]//2)+10] = True
+    initial_state[len(initial_state)//2-2, (initial_state.shape[0]//2)+10] = True
+
+    initial_state[len(initial_state)//2+3, (initial_state.shape[0]//2)+11] = True
+    initial_state[len(initial_state)//2-3, (initial_state.shape[0]//2)+11] = True
+
+
+    initial_state[len(initial_state)//2+3, (initial_state.shape[0]//2)+12] = True
+    initial_state[len(initial_state)//2-3, (initial_state.shape[0]//2)+12] = True
+
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+13] = True
+
+    initial_state[len(initial_state)//2-2, (initial_state.shape[0]//2)+14] = True
+    initial_state[len(initial_state)//2+2, (initial_state.shape[0]//2)+14] = True
+
+    
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+15] = True
+    initial_state[len(initial_state)//2+1, (initial_state.shape[0]//2)+15] = True
+    initial_state[len(initial_state)//2-1, (initial_state.shape[0]//2)+15] = True
+
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+16] = True
+
+
+    initial_state[len(initial_state)//2-1, (initial_state.shape[0]//2)+19] = True
+    initial_state[len(initial_state)//2-1, (initial_state.shape[0]//2)+20] = True
+
+    initial_state[len(initial_state)//2-2, (initial_state.shape[0]//2)+19] = True
+    initial_state[len(initial_state)//2-2, (initial_state.shape[0]//2)+20] = True
+
+    initial_state[len(initial_state)//2-3, (initial_state.shape[0]//2)+19] = True
+    initial_state[len(initial_state)//2-3, (initial_state.shape[0]//2)+20] = True
+
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+21] = True
+    initial_state[len(initial_state)//2-4, (initial_state.shape[0]//2)+21] = True
+
+    initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+23] = True
+    initial_state[len(initial_state)//2-4, (initial_state.shape[0]//2)+23] = True
+
+    initial_state[len(initial_state)//2+1, (initial_state.shape[0]//2)+23] = True
+    initial_state[len(initial_state)//2-5, (initial_state.shape[0]//2)+23] = True
+
+    initial_state[len(initial_state)//2-2, (initial_state.shape[0]//2)+33] = True
+    initial_state[len(initial_state)//2-2, (initial_state.shape[0]//2)+34] = True
+
+    initial_state[len(initial_state)//2-3, (initial_state.shape[0]//2)+33] = True
+    initial_state[len(initial_state)//2-3, (initial_state.shape[0]//2)+34] = True
+
+    return initial_state
+
+
+
+
+
