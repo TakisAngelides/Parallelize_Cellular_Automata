@@ -5,9 +5,6 @@ import os
 import numba
 from datetime import datetime
 
-numba.set_num_threads(1)
-print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
-
 def get_configurations(time_steps, initial_state):
 
     configurations = np.full(tuple(np.append(time_steps, initial_state.shape)), None, dtype=initial_state.dtype)
