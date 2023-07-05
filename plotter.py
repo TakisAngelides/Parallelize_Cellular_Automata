@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 columns = ['d', 'time', 'N', 'trial', 'rules']
 df = pd.DataFrame(columns = columns)
@@ -21,9 +22,11 @@ for element in os.listdir('Timing_Results/main_timed'):
     df = pd.concat([df, df_tmp], ignore_index=True)
 
 
-df_averaged = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
-df_averaged = df_averaged.rename(columns = {'duration' : 'average_duration'})
+d = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
+d = d.rename(columns = {'duration' : 'average_duration'})
 
-
+x, y = d[(d.N == 64) & (d.d == 3) & (d.rules == 'clouds_I')]
+plt.plot(x, y, '-x')
+plt.savefig('sharon.png', bbox_inches = 'tight')
     
 
