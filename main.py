@@ -77,6 +77,7 @@ def get_configurations(num_iterations, shape):
         
 # Set the size of the grid
 L = 16
+
 shape = (L, L, L)
 
 # which_rules can be '54' for 1D, 'game_of_life' for 2D, 'clouds_I' for 3D
