@@ -8,9 +8,8 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
         state : d-dimensional numpy array specifying the state of the cellular automata, the value at each element is boolean-like
 
-    The function trivially iterates over all cells and applies the Clouds 1 rule (see https://softologyblog.wordpress.com/2019/12/28/3d-cellular-automata-3/)
+    The function trivially iterates over all cells and applies conans's game of life rule (see https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
     
-    # TODO: Parallelize this function
 
     Returns:
     

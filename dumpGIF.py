@@ -2,6 +2,13 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 def dumpGIF(states, filename):
+    """
+    Argumens:
+    states: d dimensional cube of the evolution of the cellular automata
+    filename: name of the saved file
+    Returns:
+        Shows and saves a gif under filename
+    """
     
     fig = plt.figure()
     
