@@ -7,6 +7,8 @@ from datetime import datetime
 
 #The numba.set_num_threads(16) function call is used to set the number of threads that Numba, 
 #a just-in-time (JIT) compiler for Python, will use for parallel execution.
+#https://numba.pydata.org/numba-doc/latest/user/5minguide.html
+
 numba.set_num_threads(16)
 
 print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
@@ -14,10 +16,12 @@ print('Number of numba threads is set to:', numba.get_num_threads(), flush = Tru
 def get_configurations(time_steps, initial_state):
     """"
     Arguments:
-    time_steps: the number of time steps in the evolution of the cellular automata
-    initial_state: initial state for the evolution of the cellular automata
+        time_steps: the number of time steps in the evolution of the cellular automata
+        initial_state: initial state for the evolution of the cellular automata
+    
     Returns:
-    Numpy array of size time_steps x initial_state.shape
+        Numpy array of size time_steps x initial_state.shape
+        
 
     """"
     #initialize configurations as numpy array of shape time_steps x initial_state.shape and with None entry

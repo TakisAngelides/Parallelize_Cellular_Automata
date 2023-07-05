@@ -5,11 +5,12 @@ def apply_rules(state : np.ndarray) -> np.ndarray:
     
     """
 
+
     Inputs:
     
         state : d-dimensional numpy array specifying the state of the cellular automata, the value at each element is boolean-like
 
-    The function trivially iterates over all cells and applies the Clouds 1 rule (see https://softologyblog.wordpress.com/2019/12/28/3d-cellular-automata-3/)
+        The function iterates over all cells and applies the rules of Conway's game of life rule (see https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
     
     Returns:
     
