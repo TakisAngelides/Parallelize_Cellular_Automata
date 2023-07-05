@@ -22,8 +22,8 @@ for element in os.listdir('Timing_Results/main_timed'):
     df = pd.concat([df, df_tmp], ignore_index=True)
 
 
-df = df.groupby(['d', 'time', 'N', 'rules'])['duration'].mean()
-print(df)
+df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
+print(type(df))
 d_tmp = df[(df.N == 64) & (df.d == 3) & (df.rules == 'clouds')]
 
 x = d_tmp.time
