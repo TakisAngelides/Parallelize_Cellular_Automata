@@ -34,7 +34,6 @@ def get_configurations(time_steps, initial_state):
     state = initial_state
 
     #loop to create timeslices in configurations
-
     for t in range(1, time_steps):
         #start timing for one time step
         print(f'Running time step {t} starting at {datetime.now()}', flush = True)
