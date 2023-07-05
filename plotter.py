@@ -8,7 +8,6 @@ df = pd.DataFrame(columns = columns)
 for element in os.listdir('Timing_Results/main_timed'):
     
     row = element.split('_')
-    print(row)
     d = int(row[0])
     time = int(row[1])
     N = int(row[2])
@@ -19,19 +18,14 @@ for element in os.listdir('Timing_Results/main_timed'):
         duration = f.read()
 
     data_tmp = [d, time, N, trial, rules, duration]
-    df_tmp = pd.DataFrame([data_tmp])
+    df_tmp = pd.DataFrame([data_tmp], columns = columns)
     df = pd.concat([df, df_tmp], ignore_index=True)
-
-print(df)
 
 d = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 d = d.rename(columns = {'duration' : 'average_duration'})
 
-print(d)
-
 d_tmp = d[(d.N == 64) & (d.d == 3) & (d.rules == 'clouds')]
 
-print(d_tmp)
 x = d_tmp.time
 y = d_tmp.average_duration
 plt.plot(x, y, '-x')
