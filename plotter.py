@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-columns = ['d', 'time', 'N', 'trial', 'rules']
+columns = ['d', 'time', 'N', 'trial', 'rules', 'duration']
 df = pd.DataFrame(columns = columns)
 for element in os.listdir('Timing_Results/main_timed'):
     
@@ -20,8 +20,7 @@ for element in os.listdir('Timing_Results/main_timed'):
     data_tmp = [d, time, N, trial, rules, duration]
     df_tmp = pd.DataFrame([data_tmp])
     df = pd.concat([df, df_tmp], ignore_index=True)
-
-
+    
 d = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 d = d.rename(columns = {'duration' : 'average_duration'})
 
