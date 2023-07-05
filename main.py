@@ -12,7 +12,7 @@ def get_configurations(items):
     N = shape[0]
     d = len(shape)
 
-    print(d, N, which_rules, trial_num, datetime.now(), flush = True)
+    print(d, time_steps, N, which_rules, trial_num, datetime.now(), flush = True)
 
     start = datetime.now()
 
@@ -57,7 +57,7 @@ for i in range(trial_num):
                 
                 process_items.append([time_steps, initial_state, which_rules, trial_num])
 
-pool = multiprocessing.Pool(processes = 1)
+pool = multiprocessing.Pool(processes = 16)
 results = pool.map(get_configurations, process_items)       
 pool.close()
 pool.join() 
