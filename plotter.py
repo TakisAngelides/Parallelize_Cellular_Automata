@@ -8,6 +8,7 @@ df = pd.DataFrame(columns = columns)
 for element in os.listdir('Timing_Results/main_timed'):
     
     row = element.split('.')[0]
+    row = row.split('_')
     d = int(row[0])
     time = int(row[1])
     N = int(row[2])
