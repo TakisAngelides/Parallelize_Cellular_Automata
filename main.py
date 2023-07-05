@@ -15,11 +15,14 @@ def get_configurations(num_iterations, shape):
         configurations[0, :] = initial_state
     
         configurations_dev = cuda.to_device(configurations)
-    
-        for t in range(num_iterations):
-            update_state_1D[grid_size, block_size](width, configurations_dev, t + 1)
-            print(t)
-            cuda.synchronize()
+        if which_rules == '90':    
+            for t in range(num_iterations):
+                update_state_1D_r90[grid_size, block_size](width, configurations_dev, t + 1)
+                cuda.synchronize()
+        elif which_rules == '54':
+            for t in range(num_iterations):
+                update_state_1D_r54[grid_size, block_size](width, configurations_dev, t + 1)
+                cuda.synchronize()            
     
         configurations = configurations_dev.copy_to_host()
     
@@ -37,12 +40,14 @@ def get_configurations(num_iterations, shape):
         configurations[0, :, :] = initial_state
             
         configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
-        
-        for t in range(num_iterations):
-    
-            update_state_2D[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
-            cuda.synchronize()  # Ensure all computations on GPU are completed    
-            
+        if which_rules == 'tumor_growth':
+            for t in range(num_iterations):
+                update_state_2D_rTM[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
+                cuda.synchronize()  # Ensure all computations on GPU are completed   
+        elif which_rules == 'game_of_life':
+            for t in range(num_iterations):
+                update_state_2D_rGOL[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
+                cuda.synchronize()  # Ensure all computations on GPU are completed             
         # Copy the configurations array from GPU to CPU
         configurations = configurations_dev.copy_to_host()
         
@@ -65,12 +70,17 @@ def get_configurations(num_iterations, shape):
         configurations[0, :, :, :] = initial_state
     
         configurations_dev = cuda.to_device(configurations)
-    
-        for t in range(num_iterations):
-            update_state_3D[grid_size, block_size](width, height, depth, configurations_dev, t + 1)
+        if which_rules == 'builder_II':
+            for t in range(num_iterations):
+                update_state_3D_rBII[grid_size, block_size](width, height, depth, configurations_dev, t + 1)
+                
+                cuda.synchronize()
+        elif which_rules == 'clouds_I':
+            for t in range(num_iterations):
+                update_state_3D_rCI[grid_size, block_size](width, height, depth, configurations_dev, t + 1)
+                
+                cuda.synchronize()            
             
-            cuda.synchronize()
-    
         configurations = configurations_dev.copy_to_host()
     
         return configurations
@@ -80,7 +90,8 @@ L = 16
 
 shape = (L, L, L)
 
-# which_rules can be '54' for 1D, 'game_of_life' for 2D, 'clouds_I' for 3D
+# which_rules can be '54' or '90' for 1D, 'game_of_life' of 'tumor_growth' for 2D, 'clouds_I' or 'builder_II' for 3D
+
 which_rules = 'game_of_life'
 
 # Set the number of iterations
