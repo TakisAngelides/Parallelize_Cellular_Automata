@@ -21,18 +21,12 @@ for element in os.listdir('Timing_Results/main_timed'):
     df_tmp = pd.DataFrame([data_tmp], columns = columns)
     df = pd.concat([df, df_tmp], ignore_index=True)
 
-print(df)
-df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration']
-print(df)
-df = df.mean()
-print(df)
-df = df.rename(columns = {'duration' : 'average_duration'})
-print(df)
 
+df = df.groupby(['d', 'time', 'N', 'rules'])['duration'].mean()
 d_tmp = df[(df.N == 64) & (df.d == 3) & (df.rules == 'clouds')]
 
 x = d_tmp.time
-y = d_tmp.average_duration
+y = d_tmp.duration
 plt.plot(x, y, '-x')
 plt.savefig('sharon.png', bbox_inches = 'tight')
     
