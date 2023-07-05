@@ -24,7 +24,9 @@ for element in os.listdir('Timing_Results/main_timed'):
 d = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 d = d.rename(columns = {'duration' : 'average_duration'})
 
-x, y = d[(d.N == 64) & (d.d == 3) & (d.rules == 'clouds')]
+d_tmp = d[(d.N == 64) & (d.d == 3) & (d.rules == 'clouds')]
+x = d_tmp.time
+y = d_tmp.average_duration
 plt.plot(x, y, '-x')
 plt.savefig('sharon.png', bbox_inches = 'tight')
     
