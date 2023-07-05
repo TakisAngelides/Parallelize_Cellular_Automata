@@ -17,7 +17,7 @@ def initialize_array(shape, initial_value=0, dtype=np.bool):
 def initialize_random_array(shape, values=[True, False], p = [0.5, 0.5]):
     """"
     Arguments:
-        shape: the dimension of the array to to be created in the function
+        shape: the dimension of the array 
         values: these list give the possible entries of the array 
         p: p gives the probabilites that entries have a value of the list values 
 
