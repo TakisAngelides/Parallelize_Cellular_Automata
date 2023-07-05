@@ -1,54 +1,80 @@
-from numba import cuda
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 import matplotlib.animation as animation
 from dumpGIF import *
+from update_state import *
 
-@cuda.jit
-def update_state(width, height, configurations_dev, iteration):
+def get_configurations(num_iterations, shape):
+    d = len(shape)
+    if d == 1 :
+        block_size = 1
+        grid_size = (width + block_size - 1) // block_size
     
+        configurations = np.empty((num_iterations + 1, width), dtype=bool)
+        configurations[0, :] = initial_state
+    
+        configurations_dev = cuda.to_device(configurations)
+    
+        for t in range(num_iterations):
+            update_state_1D[grid_size, block_size](width, configurations_dev, t + 1)
+            print(t)
+            cuda.synchronize()
+    
+        configurations = configurations_dev.copy_to_host()
+    
+        return configurations
 
-    x, y = cuda.grid(2)
-    
-    left = (x - 1 + width) % width
-    right = (x + 1) % width
-    top = (y - 1 + height) % height
-    bottom = (y + 1) % height
-    
-    # Moore neighbours
-    alive = (
-    configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] +configurations_dev[iteration-1, x, bottom] +
-    configurations_dev[iteration-1, left, top] +configurations_dev[iteration-1, right, top] +configurations_dev[iteration-1, left, bottom] + configurations_dev[iteration-1, right, bottom]
-)
-      
-    configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
-    
-def get_configurations(num_iterations, width, height):
-    
-    block_size = (1, 1)
-    grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
-    
-    configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
-    configurations[0, :, :] = initial_state
+    if d == 2 :    
+        block_size = (1, 1)
+        grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
         
-    configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
-    
-    for t in range(num_iterations):
-
-        update_state[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
-        cuda.synchronize()  # Ensure all computations on GPU are completed    
+        configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
+        configurations[0, :, :] = initial_state
+            
+        configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
         
-    # Copy the configurations array from GPU to CPU
-    configurations = configurations_dev.copy_to_host()
+        for t in range(num_iterations):
     
-    return configurations
+            update_state_2D[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
+            cuda.synchronize()  # Ensure all computations on GPU are completed    
+            
+        # Copy the configurations array from GPU to CPU
+        configurations = configurations_dev.copy_to_host()
+        
+        return configurations
+
+
+    if d == 3:
+
+        block_size = (1, 1, 1)
+        grid_size = (
+            (width + block_size[0] - 1) // block_size[0],
+            (height + block_size[1] - 1) // block_size[1],
+            (depth + block_size[2] - 1) // block_size[2]
+        )
     
+        configurations = np.empty((num_iterations + 1, width, height, depth), dtype=bool)
+        configurations[0, :, :, :] = initial_state
+    
+        configurations_dev = cuda.to_device(configurations)
+    
+        for t in range(num_iterations):
+            update_state_3D[grid_size, block_size](width, height, depth, configurations_dev, t + 1)
+            
+            cuda.synchronize()
+    
+        configurations = configurations_dev.copy_to_host()
+    
+        return configurations
+        
 # Set the size of the grid
 width = 16
 height = 16
+depth = 16
 
 shape = (width, height)
+
 which_rules = 'tumor_growth'
 
 # Set the number of iterations
@@ -58,7 +84,7 @@ num_iterations = 100
 initial_state = get_initial_state(shape, which_rules)
 
 # Run the cellular automaton and get the configurations
-configurations = get_configurations(num_iterations, width, height)
+configurations = get_configurations(num_iterations, shape)
 
 print('Now calling to get the gif and save it.')
 start = datetime.now()
