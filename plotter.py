@@ -43,5 +43,6 @@ for N in df.N:
             plt.ylabel('Duration (s)')
             plt.xlabel('Evolution Steps')
             plt.savefig(f'Plots/main_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
+            plt.close()
     
 
