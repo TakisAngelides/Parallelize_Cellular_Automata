@@ -3,33 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 import matplotlib.animation as animation
-
-def dumpGIF(states, filename):
-    
-    fig = plt.figure()
-    ax = fig.add_subplot()
-        
-    def animate(frame):
-        
-        ax.clear()
-        ax.set_title(f"Iteration: {frame}")
-        ax.imshow(states[frame], cmap = 'binary')
-        ax.set_xticks([])
-        ax.set_yticks([])
-    
-    ani = animation.FuncAnimation(fig, animate, frames = len(states), interval = 200)
-    ani.save(filename, writer='pillow')
+from dumpGIF import *
 
 @cuda.jit
 def update_state(width, height, configurations_dev, iteration):
     
+
     x, y = cuda.grid(2)
     
     left = (x - 1 + width) % width
     right = (x + 1) % width
     top = (y - 1 + height) % height
     bottom = (y + 1) % height
-    # Moore neighours
+    
+    # Moore neighbours
     alive = (
     configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] +configurations_dev[iteration-1, x, bottom] +
     configurations_dev[iteration-1, left, top] +configurations_dev[iteration-1, right, top] +configurations_dev[iteration-1, left, bottom] + configurations_dev[iteration-1, right, bottom]
@@ -61,16 +48,14 @@ def get_configurations(num_iterations, width, height):
 width = 16
 height = 16
 
+shape = (width, height)
+which_rules = 'tumor_growth'
+
 # Set the number of iterations
 num_iterations = 100
 
 # Create the initial state
-initial_state = np.zeros((width, height), dtype = bool)
-initial_state[len(initial_state)//2, (initial_state.shape[0]//2)-1] = True
-initial_state[len(initial_state)//2, (initial_state.shape[0]//2)+1] = True
-initial_state[(len(initial_state)//2)+1, (initial_state.shape[0]//2)+1] = True
-initial_state[len(initial_state)//2, initial_state.shape[0]//2] = True
-initial_state[(len(initial_state)//2)-1, (initial_state.shape[0]//2)] = True
+initial_state = get_initial_state(shape, which_rules)
 
 # Run the cellular automaton and get the configurations
 configurations = get_configurations(num_iterations, width, height)
