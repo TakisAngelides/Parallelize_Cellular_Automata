@@ -13,8 +13,8 @@ def update_state_1D(width, configurations_dev, iteration):
     )
 
     configurations_dev[iteration, x] = (
-        (configurations_dev[iteration-1, x]) and (alive >= 1) and (alive < 3)
-    ) or ((not configurations_dev[iteration-1, x]) and (alive == 2))
+        (configurations_dev[iteration-1, x]) and (alive == 0)
+    ) or ((not configurations_dev[iteration-1, x]) and (alive > 0))
 
 
 
