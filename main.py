@@ -7,7 +7,9 @@ from update_state import *
 
 def get_configurations(num_iterations, shape):
     d = len(shape)
+    
     if d == 1 :
+        width = shape
         block_size = 1
         grid_size = (width + block_size - 1) // block_size
     
@@ -26,6 +28,10 @@ def get_configurations(num_iterations, shape):
         return configurations
 
     if d == 2 :    
+        width = shape[0]
+        height = shape[1]
+        
+        
         block_size = (1, 1)
         grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
         
@@ -46,7 +52,10 @@ def get_configurations(num_iterations, shape):
 
 
     if d == 3:
-
+        width = shape[0]
+        height = shape[1]
+        depth = shape[2]
+        
         block_size = (1, 1, 1)
         grid_size = (
             (width + block_size[0] - 1) // block_size[0],
@@ -69,13 +78,11 @@ def get_configurations(num_iterations, shape):
         return configurations
         
 # Set the size of the grid
-width = 16
-height = 16
-depth = 16
 
-shape = (width, height)
+shape = (16,16)
 
-which_rules = 'tumor_growth'
+# Which rule can only be '54' for 1D, 'game_of_life' for 2D, 'clouds_I' for 3D
+which_rules = 'game_of_life'
 
 # Set the number of iterations
 num_iterations = 100
