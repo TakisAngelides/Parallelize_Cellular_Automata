@@ -26,10 +26,12 @@ for element in os.listdir('Timing_Results/main_timed'):
 df_std = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].std()
 df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 
-
+print(df.N, df.d, df.rules)
 for N in df.N:
     for d in df.d:
         for rules in df.rules:
+            
+            print(d, N, rules)
             
             d_tmp = df[(df.N == N) & (df.d == d) & (df.rules == rules)]
             d_std_tmp = df_std[(df.N == N) & (df.d == d) & (df.rules == rules)]
