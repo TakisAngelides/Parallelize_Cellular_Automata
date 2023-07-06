@@ -34,8 +34,6 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
     
     if d == 1:
         
-        sum = 0
-        
         left = (site[0] - 1 + N) % N
         right = (site[0] + 1) % N
         
@@ -47,6 +45,8 @@ def count_alive_neighbours(site: np.ndarray, state: np.ndarray) -> int:
         right = (site[0] + 1) % N
         top = (site[1] - 1 + N) % N
         bottom = (site[1] + 1) % N
+        
+        print(N, left, right, top, bottom)
                 
         return state[left, site[1]] + state[right, site[1]] + state[site[0], top] + state[site[0], bottom] + state[left, top] + state[right, top] + state[left, bottom] + state[right, bottom]
     
