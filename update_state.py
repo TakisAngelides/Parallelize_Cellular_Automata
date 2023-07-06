@@ -48,11 +48,18 @@ def update_state_2D_rGOL(width, height, configurations_dev, iteration):
     
     # Moore neighbours
     alive = (
-    configurations_dev[iteration-1, left, y] + configurations_dev[iteration-1, right, y] + configurations_dev[iteration-1, x, top] +configurations_dev[iteration-1, x, bottom] +
-    configurations_dev[iteration-1, left, top] +configurations_dev[iteration-1, right, top] +configurations_dev[iteration-1, left, bottom] + configurations_dev[iteration-1, right, bottom]
+    configurations_dev[iteration-1, left, y]      + 
+    configurations_dev[iteration-1, right, y]     + 
+    configurations_dev[iteration-1, x, top]       +
+    configurations_dev[iteration-1, x, bottom]    +
+    configurations_dev[iteration-1, left, top]    +
+    configurations_dev[iteration-1, right, top]   +
+    configurations_dev[iteration-1, left, bottom] + 
+    configurations_dev[iteration-1, right, bottom]
 )
       
-    configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
+    configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or 
+                                          ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
 
 @cuda.jit
 def update_state_2D_rTG(width, height, configurations_dev, iteration):
