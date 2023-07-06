@@ -66,17 +66,18 @@ def apply_rules_2d(state : np.ndarray, which_rules : str, site_indices : np.ndar
 
     return new_state
 
-@njit()
-def apply_rules_3d(state : np.ndarray, which_rules : str, site_indices : np.ndarray) -> np.ndarray:
+@njit(parallel = True)
+def apply_rules_3d(state : np.ndarray, which_rules : str) -> np.ndarray:
     
     N = len(state)
     new_state = np.full(state.shape, False)
     
     if which_rules == 'clouds_I':
         
-        for idx in range(N**3):
+        for idx in prange(N**3):
         
-            site_index = site_indices[idx]
+            # site_index = site_indices[idx]
+            site_index = np.unravel_index(idx, state.shape)
             x, y, z = site_index
             current_cell_value = state[x, y, z]
 
@@ -88,7 +89,8 @@ def apply_rules_3d(state : np.ndarray, which_rules : str, site_indices : np.ndar
         
         for idx in prange(N**3):
         
-            site_index = site_indices[idx]
+            # site_index = site_indices[idx]
+            site_index = np.unravel_index(idx, state.shape)
             x, y, z = site_index
             current_cell_value = state[x, y, z]
                         
