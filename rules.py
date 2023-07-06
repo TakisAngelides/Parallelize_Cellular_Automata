@@ -1,17 +1,17 @@
 from neighbours import *
 from numba import prange
 
-# @njit(parallel = True)
+@njit(parallel = True)
 def apply_rules_1d(state : np.ndarray, which_rules : str, site_indices : np.ndarray) -> np.ndarray:
         
     N = len(state)
     new_state = np.full(state.shape, False)
     
-    for idx in range(N):
+    for idx in prange(N):
         
         site_index = site_indices[idx]
-        current_cell_value = state[site_index[0]]
-        print(current_cell_value)
+        x = site_index
+        current_cell_value = state[x]
         
         if which_rules == '54':
             
@@ -37,7 +37,8 @@ def apply_rules_2d(state : np.ndarray, which_rules : str, site_indices : np.ndar
     for idx in prange(N**2):
         
         site_index = site_indices[idx]
-        current_cell_value = state[site_index]
+        x, y = site_index
+        current_cell_value = state[x, y]
 
         if which_rules == 'game_of_life':
             
@@ -62,7 +63,8 @@ def apply_rules_3d(state : np.ndarray, which_rules : str, site_indices : np.ndar
     for idx in prange(N**3):
         
         site_index = site_indices[idx]
-        current_cell_value = state[site_index]
+        x, y, z = site_index
+        current_cell_value = state[x, y, z]
 
         if which_rules == 'clouds_I':
             
