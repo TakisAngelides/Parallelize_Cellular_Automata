@@ -35,10 +35,10 @@ def get_configurations(items):
     with open(f'Timing_Results/njit_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
         f.write(f'{duration.total_seconds()}')
 
-trial_num = 5
-time_steps_list = [10, 20, 30, 40, 50]
-N_list = [16, 32, 64, 128]
-which_rules_list = ['54', '90', 'game_of_life', 'tumor_growth', 'clouds_I', 'builder_II']
+trial_num = 1
+time_steps_list = [10] # , 20, 30, 40, 50]
+N_list = [16] # , 32, 64, 128]
+which_rules_list = ['54'] # , '90', 'game_of_life', 'tumor_growth', 'clouds_I', 'builder_II']
 process_items = []
 
 for i in range(trial_num):
