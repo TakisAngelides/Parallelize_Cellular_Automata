@@ -72,7 +72,7 @@ def plot_duration_vs_N():
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel(f'$N^{d}$')
-                plt.xscale('log')
+                # plt.xscale('log')
                 plt.savefig(f'Plots/njit_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
     
