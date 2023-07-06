@@ -10,6 +10,8 @@ should_transfer_files = IF_NEEDED
 
 request_memory = 3G 
 
+request_gpus = 1
+
 error = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_numba_gpu_timed.error
 
 output = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_numba_gpu_timed.out
