@@ -10,7 +10,7 @@ def apply_rules_1d(state : np.ndarray, which_rules : str, site_indices : np.ndar
     for idx in range(N):
         
         site_index = site_indices[idx]
-        current_cell_value = state[site_index]
+        current_cell_value = state[site_index[0]]
         print(current_cell_value)
         
         if which_rules == '54':
