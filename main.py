@@ -2,8 +2,13 @@ from rules import *
 import numba
 from datetime import datetime
 from init_state import get_initial_state
+import sys
 
-numba.set_num_threads(2)
+num_threads = sys.argv[1]
+
+numba.set_num_threads(num_threads)
+print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
+
 
 def get_configurations(items):
     
@@ -57,6 +62,8 @@ def get_configurations(items):
     
     duration = end - start
     
+    print(duration, flush = True)
+    
     with open(f'Timing_Results/njit_parallel_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
         f.write(f'{duration.total_seconds()}')
 
@@ -87,5 +94,8 @@ for i in range(trial_num):
 # pool.close()
 # pool.join() 
 
-for item in process_items:
-    get_configurations(item)
+# for item in process_items:
+#     get_configurations(item)
+
+initial_state = get_initial_state((128, 128, 128), 'clouds_I')  
+get_configurations([50, initial_state, 'clouds_I', 0])
