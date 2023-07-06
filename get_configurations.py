@@ -1,6 +1,6 @@
 from datetime import datetime
 from init_state import get_initial_state
-from dumpGIF import *
+import numpy as np
 from update_state import *
 
 def get_configurations(num_iterations, initial_state, shape, which_rules):
