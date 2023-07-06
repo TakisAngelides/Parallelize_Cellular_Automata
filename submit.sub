@@ -1,0 +1,19 @@
+environment = "PYTHONPATH='/lustre/fs24/group/cqta/tangelides/anaconda3:$PYTHONPATH'"
+
+executable = /lustre/fs24/group/cqta/tangelides/anaconda3/bin/python3.9
+
+arguments = /lustre/fs24/group/cqta/tangelides/Parallelize_Cellular_Automata/main.py 
+ 
+transfer_input_files = /lustre/fs24/group/cqta/tangelides/Parallelize_Cellular_Automata/main.py 
+
+should_transfer_files = IF_NEEDED
+
+request_memory = 3G 
+
+error = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_main_timed.error
+
+output = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_main_timed.out
+
+log = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_main_timed.log
+
+queue
