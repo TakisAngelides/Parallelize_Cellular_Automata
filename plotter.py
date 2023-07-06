@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 columns = ['d', 'time', 'N', 'trial', 'rules', 'duration']
 df = pd.DataFrame(columns = columns)
-for element in os.listdir('Timing_Results/njit_parallel_timed'):
+for element in os.listdir('Timing_Results/numba_gpu_timed'):
     
     row = element.split('.')[0]
     row = row.split('_')
@@ -15,7 +15,7 @@ for element in os.listdir('Timing_Results/njit_parallel_timed'):
     trial = int(row[3])
     rules = row[4]
     
-    with open(f'Timing_Results/njit_parallel_timed/{element}', 'r') as f:
+    with open(f'Timing_Results/numba_gpu_timed/{element}', 'r') as f:
         duration = float(f.read())
 
     data_tmp = [d, time, N, trial, rules, duration]
@@ -26,8 +26,8 @@ for element in os.listdir('Timing_Results/njit_parallel_timed'):
 df_std = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].std()
 df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 
-df_std.to_csv('Timing_Dataframes/njit_parallel_timed_std.csv', index=False)
-df.to_csv('Timing_Dataframes/njit_parallel_timed.csv', index=False)
+df_std.to_csv('Timing_Dataframes/numba_gpu_timed_std.csv', index=False)
+df.to_csv('Timing_Dataframes/numba_gpu_timed.csv', index=False)
 
 def plot_duration_vs_time():
 
@@ -45,7 +45,7 @@ def plot_duration_vs_time():
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel('Evolution Steps')
-                plt.savefig(f'Plots/njit_parallel_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
+                plt.savefig(f'Plots/numba_gpu_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
                 
 plot_duration_vs_time()    
@@ -66,7 +66,7 @@ def plot_duration_vs_N():
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel(f'$N^{d}$')
-                plt.savefig(f'Plots/njit_parallel_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
+                plt.savefig(f'Plots/numba_gpu_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
     
 plot_duration_vs_N()    

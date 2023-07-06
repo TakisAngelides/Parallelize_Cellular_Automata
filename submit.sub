@@ -10,10 +10,10 @@ should_transfer_files = IF_NEEDED
 
 request_memory = 3G 
 
-error = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_njit_parallel_timed.error
+error = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_numba_gpu_timed.error
 
-output = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_njit_parallel_timed.out
+output = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_numba_gpu_timed.out
 
-log = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_njit_parallel_timed.log
+log = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_numba_gpu_timed.log
 
 queue
