@@ -84,26 +84,4 @@ def get_configurations(num_iterations, shape, which_rules):
         configurations = configurations_dev.copy_to_host()
     
         return configurations
-def get_simulation(L, which_rules, num_iterations)        
-    # Set the size of the grid
-    
-    #L=16
-    shape = (L, L, L)
-    
-    # which_rules can be '54' or '90' for 1D, 'game_of_life' of 'tumor_growth' for 2D, 'clouds_I' or 'builder_II' for 3D
-    
-    #which_rules = 'game_of_life'
-    
-    # Set the number of iterations
-    #num_iterations = 100
-    
-    # Create the initial state
-    initial_state = get_initial_state(shape, which_rules)
-    
-    # Run the cellular automaton and get the configurations
-    configurations = get_configurations(num_iterations, shape, which_rules)
-    
-    #print('Now calling to get the gif and save it.')
-    #start = datetime.now()
-    #dumpGIF(configurations, 'test.gif')
-    #print(f'Time taken to save the gif is {datetime.now()-start}.', flush = True)
+
