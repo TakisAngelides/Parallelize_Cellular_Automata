@@ -62,7 +62,7 @@ def get_configurations(items):
     
     duration = end - start
     
-    print(duration, flush = True)
+    print(duration.total_seconds(), flush = True)
     
     with open(f'Timing_Results/njit_parallel_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
         f.write(f'{duration.total_seconds()}')
@@ -97,5 +97,5 @@ for i in range(trial_num):
 # for item in process_items:
 #     get_configurations(item)
 
-initial_state = get_initial_state((128, 128, 128), 'clouds_I')  
+initial_state = get_initial_state((64, 64, 64), 'clouds_I')  
 get_configurations([50, initial_state, 'clouds_I', 0])
