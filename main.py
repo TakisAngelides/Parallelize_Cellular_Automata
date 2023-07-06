@@ -16,6 +16,20 @@ def get_configurations(items):
     d = len(shape)
 
     print(d, time_steps, N, which_rules, trial_num, datetime.now(), flush = True)
+    
+    state = initial_state
+    
+    if d == 1:
+    
+        site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N)])
+    
+    if d == 2:
+    
+        site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**2)])
+    
+    if d == 3:
+    
+        site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**3)])
 
     start = datetime.now()
 
@@ -23,23 +37,18 @@ def get_configurations(items):
 
     configurations[0] = initial_state
 
-    state = initial_state
-    
     for t in range(1, time_steps):
         
         if d == 1:
             
-            site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N)])
             state = apply_rules_1d(state, which_rules, site_indices)
             
         if d == 2:
         
-            site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**2)])
             state = apply_rules_2d(state, which_rules, site_indices)
             
         if d == 3:
             
-            site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**3)])
             state = apply_rules_3d(state, which_rules, site_indices)
         
         
