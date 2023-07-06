@@ -66,7 +66,7 @@ def apply_rules_2d(state : np.ndarray, which_rules : str, site_indices : np.ndar
 
     return new_state
 
-@njit(parallel = True)
+@njit()
 def apply_rules_3d(state : np.ndarray, which_rules : str, site_indices : np.ndarray) -> np.ndarray:
     
     N = len(state)
