@@ -35,40 +35,10 @@ def count_alive_neighbours_3d(site: np.ndarray, state: np.ndarray) -> int:
     bottom = (site[1] + 1) % N
     front = (site[2] - 1 + N) % N
     back = (site[2] + 1) % N
-    
-    total_sum = 0
 
     x = site[0]
     y = site[1]
     z = site[2]
 
-    total_sum += state[left, y, z]
-    total_sum += state[right, y, z]
-    total_sum += state[x, top, z]
-    total_sum += state[x, bottom, z]
-    total_sum += state[left, top, z]
-    total_sum += state[right, top, z]
-    total_sum += state[left, bottom, z]
-    total_sum += state[right, bottom, z]
-    total_sum += state[left, y, front]
-    total_sum += state[right, y, front]
-    total_sum += state[left, y, back]
-    total_sum += state[right, y, back]
-    total_sum += state[x, top, front]
-    total_sum += state[x, top, back]
-    total_sum += state[x, bottom, front]
-    total_sum += state[x, bottom, back]
-    total_sum += state[left, top, front]
-    total_sum += state[right, top, front]
-    total_sum += state[left, bottom, front]
-    total_sum += state[right, bottom, front]
-    total_sum += state[left, top, back]
-    total_sum += state[right, top, back]
-    total_sum += state[left, bottom, back]
-    total_sum += state[right, bottom, back]
-    total_sum += state[x, top-1, z]
-    total_sum += state[x, bottom+1, z]
-    total_sum += state[x, top, front-1]
-    total_sum += state[x, bottom, back+1]
+    return state[left, y, z] + state[right, y, z] + state[x, top, z] + state[x, bottom, z] + state[left, top, z] + state[right, top, z] + state[left, bottom, z] + state[right, bottom, z] + state[left, y, front] + state[right, y, front] + state[left, y, back] + state[right, y, back] + state[x, top, front] + state[x, top, back] + state[x, bottom, front] + state[x, bottom, back] + state[left, top, front] + state[right, top, front] + state[left, bottom, front] + state[right, bottom, front] + state[left, top, back] + state[right, top, back] + state[left, bottom, back] + state[right, bottom, back] + state[x, top-1, z] + state[x, bottom+1, z] + state[x, top, front-1] + state[x, bottom, back+1]
     
-    return total_sum
