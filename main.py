@@ -48,7 +48,7 @@ for i in range(trial_num):
                 
                 if idx < 2:
                     shape = (N)
-                elif idx > 2 and idx < 4:
+                elif idx >= 2 and idx < 4:
                     shape = (N, N)
                 else:
                     shape = (N, N, N)
