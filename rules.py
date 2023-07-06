@@ -1,16 +1,17 @@
 from neighbours import *
 from numba import prange
 
-@njit(parallel = True)
+# @njit(parallel = True)
 def apply_rules_1d(state : np.ndarray, which_rules : str, site_indices : np.ndarray) -> np.ndarray:
         
     N = len(state)
     new_state = np.full(state.shape, False)
     
-    for idx in prange(N):
+    for idx in range(N):
         
         site_index = site_indices[idx]
         current_cell_value = state[site_index]
+        print(current_cell_value)
         
         if which_rules == '54':
             
