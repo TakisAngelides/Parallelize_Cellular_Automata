@@ -56,7 +56,7 @@ def plot_duration_vs_N():
                 d_tmp = df[(df.time == time) & (df.d == d) & (df.rules == rules)]
                 d_std_tmp = df_std[(df.time == time) & (df.d == d) & (df.rules == rules)]
 
-                x = d_tmp.N**d
+                x = np.array(d_tmp.N)**d
                 y = d_tmp.duration
                 yerr = d_std_tmp.duration
                 
