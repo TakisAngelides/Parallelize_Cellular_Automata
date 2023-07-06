@@ -26,6 +26,9 @@ for element in os.listdir('Timing_Results/main_timed'):
 df_std = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].std()
 df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 
+df_std.to_csv('main_timed_std.csv', index=False)
+df.to_csv('main_timed.csv', index=False)
+
 def plot_duration_vs_time():
 
     for N in set(df.N):
