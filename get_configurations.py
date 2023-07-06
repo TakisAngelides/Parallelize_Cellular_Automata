@@ -42,7 +42,7 @@ def get_configurations(num_iterations, initial_state, shape, which_rules):
         configurations_dev = cuda.to_device(configurations)  # Copy configurations array to the GPU
         if which_rules == 'tumor_growth':
             for t in range(num_iterations):
-                update_state_2D_rTM[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
+                update_state_2D_rTG[grid_size, block_size](width, height, configurations_dev, t + 1) # on GPU
                 cuda.synchronize()  # Ensure all computations on GPU are completed   
         elif which_rules == 'game_of_life':
             for t in range(num_iterations):
