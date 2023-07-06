@@ -3,7 +3,7 @@ import numba
 from datetime import datetime
 from init_state import get_initial_state
 
-numba.set_num_threads(64)
+numba.set_num_threads(2)
 
 def get_configurations(items):
     
