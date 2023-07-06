@@ -57,7 +57,7 @@ for i in range(trial_num):
                 
                 process_items.append([time_steps, initial_state, which_rules, i])
 
-pool = multiprocessing.Pool(processes = 64)
+pool = multiprocessing.Pool(processes = 16)
 results = pool.map(get_configurations, process_items)       
 pool.close()
 pool.join() 
