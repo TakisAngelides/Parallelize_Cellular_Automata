@@ -3,7 +3,7 @@ from init_state import get_initial_state
 from dumpGIF import *
 from update_state import *
 
-def get_configurations(num_iterations, shape, which_rules):
+def get_configurations(num_iterations, initial_state, shape, which_rules):
     d = len(shape)
     
     if d == 1 :
