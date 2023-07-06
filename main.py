@@ -26,7 +26,7 @@ def get_simulation(items):
 
     duration = end - start
     
-    print(duration, flush = True)
+    print(duration.total_seconds(), flush = True)
 
     with open(f'Timing_Results/numba_gpu_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
         f.write(f'{duration.total_seconds()}')
