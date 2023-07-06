@@ -1,4 +1,5 @@
 from numba import cuda
+import numpy as np
 
 @cuda.jit
 def update_state_1D_r54(width, configurations_dev, iteration):
