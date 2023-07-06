@@ -4,9 +4,9 @@ from datetime import datetime
 from init_state import get_initial_state
 import sys
 
-num_threads = int(sys.argv[1])
+# num_threads = int(sys.argv[1])
 
-numba.set_num_threads(num_threads)
+numba.set_num_threads(64)
 print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
 
 
@@ -94,8 +94,8 @@ for i in range(trial_num):
 # pool.close()
 # pool.join() 
 
-# for item in process_items:
-#     get_configurations(item)
+for item in process_items:
+    get_configurations(item)
 
-initial_state = get_initial_state((64, 64, 64), 'clouds_I')  
-get_configurations([50, initial_state, 'clouds_I', 0])
+# initial_state = get_initial_state((64, 64, 64), 'clouds_I')  
+# get_configurations([50, initial_state, 'clouds_I', 0])
