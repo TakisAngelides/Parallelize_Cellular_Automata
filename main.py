@@ -21,7 +21,7 @@ def get_simulation(items)
     start = datetime.now()
     
     # Run the cellular automaton and get the configurations
-    configurations = get_configurations(num_iterations, shape, which_rules)
+    configurations = get_configurations(time_steps, shape, which_rules)
     
     end = datetime.now()
     
