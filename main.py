@@ -4,7 +4,7 @@ from datetime import datetime
 from init_state import get_initial_state
 import multiprocessing
 
-numba.set_num_threads(4)
+numba.set_num_threads(2)
 
 def get_configurations(items):
     
@@ -83,7 +83,7 @@ for i in range(trial_num):
                 
                 process_items.append([time_steps, initial_state, which_rules, i])
 
-pool = multiprocessing.Pool(processes = 1)
+pool = multiprocessing.Pool(processes = 32)
 results = pool.map(get_configurations, process_items)       
 pool.close()
 pool.join() 
