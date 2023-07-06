@@ -1,5 +1,5 @@
 from datetime import datetime
-import multiprocessing
+# import multiprocessing
 from get_configurations import *
 
 def get_simulation(items):
@@ -31,7 +31,7 @@ def get_simulation(items):
 
 trial_num = 5
 time_steps_list = [10, 20, 30, 40, 50]
-N_list = [4, 8, 16, 32, 64]
+N_list = [4, 8, 16, 32, 64, 128]
 which_rules_list = ['54', '90', 'game_of_life', 'tumor_growth', 'clouds_I', 'builder_II']
 process_items = []
 
@@ -51,7 +51,10 @@ for i in range(trial_num):
 
                 process_items.append([time_steps, initial_state, which_rules, i])
 
-pool = multiprocessing.Pool(processes = 64)
-results = pool.map(get_simulation, process_items)
-pool.close()
-pool.join()
+# pool = multiprocessing.Pool(processes = 64)
+# results = pool.map(get_simulation, process_items)
+# pool.close()
+# pool.join()
+
+for item in process_items:
+    get_simulation(item)
