@@ -46,7 +46,7 @@ def get_configurations(items):
     
     duration = end - start
     
-    with open(f'Timing_Results/njit_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
+    with open(f'Timing_Results/njit_parallel_timed/{d}_{time_steps}_{N}_{trial_num}_{which_rules}.txt', 'w') as f:
         f.write(f'{duration.total_seconds()}')
 
 trial_num = 5
