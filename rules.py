@@ -67,7 +67,7 @@ def apply_rules_2d(state : np.ndarray, which_rules : str, site_indices : np.ndar
     return new_state
 
 @njit(parallel = True)
-def apply_rules_3d(state : np.ndarray, which_rules : str) -> np.ndarray:
+def apply_rules_3d(state : np.ndarray, which_rules : str, site_indices : np.ndarray) -> np.ndarray:
     
     N = len(state)
     new_state = np.full(state.shape, False)
@@ -76,8 +76,7 @@ def apply_rules_3d(state : np.ndarray, which_rules : str) -> np.ndarray:
         
         for idx in prange(N**3):
         
-            # site_index = site_indices[idx]
-            site_index = np.unravel_index(idx, state.shape)
+            site_index = site_indices[idx]
             x, y, z = site_index
             current_cell_value = state[x, y, z]
 
@@ -89,8 +88,7 @@ def apply_rules_3d(state : np.ndarray, which_rules : str) -> np.ndarray:
         
         for idx in prange(N**3):
         
-            # site_index = site_indices[idx]
-            site_index = np.unravel_index(idx, state.shape)
+            site_index = site_indices[idx]
             x, y, z = site_index
             current_cell_value = state[x, y, z]
                         
