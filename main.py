@@ -23,17 +23,17 @@ def get_configurations(items):
     
     state = initial_state
     
-    if d == 1:
+    # if d == 1:
     
-        site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N)])
+    #     site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N)])
     
-    if d == 2:
+    # if d == 2:
     
-        site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**2)])
+    #     site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**2)])
     
-    if d == 3:
+    # if d == 3:
     
-        site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**3)])
+    #     site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**3)])
 
     start = datetime.now()
 
@@ -45,15 +45,15 @@ def get_configurations(items):
         
         if d == 1:
             
-            state = apply_rules_1d(state, which_rules, site_indices)
+            state = apply_rules_1d(state, which_rules)
             
         if d == 2:
         
-            state = apply_rules_2d(state, which_rules, site_indices)
+            state = apply_rules_2d(state, which_rules)
             
         if d == 3:
             
-            state = apply_rules_3d(state, which_rules, site_indices)
+            state = apply_rules_3d(state, which_rules)
         
         
         configurations[t] = state
