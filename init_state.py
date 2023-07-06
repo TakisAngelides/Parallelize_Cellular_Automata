@@ -39,7 +39,7 @@ def initialize_two_glider_octomino(shape):
     return initial_state
 
 def get_initial_state(shape,which_rules):
-    if ((which_rules == '54'  or  which_rules == '90') and len(shape) == 1):
+    if ((which_rules == '54'  or  which_rules == '90')):
         initial_state = np.zeros(shape, dtype = bool)
         initial_state[len(initial_state)//2] = True
         return initial_state
