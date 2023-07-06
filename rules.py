@@ -1,11 +1,17 @@
 from neighbours import *
+from numba import prange
 
 @njit(parallel = True)
 def apply_rules_1d(state : np.ndarray, which_rules : str) -> np.ndarray:
         
+    N = len(state)
     new_state = np.full(state.shape, False)
     
-    for site_index, current_cell_value in np.ndenumerate(state):
+    for idx in prange(N):
+        
+        x = np.unravel_index(idx, state.shape)
+        current_cell_value = state[x]
+        site_index = (x)
         
         if which_rules == '54':
             
@@ -25,9 +31,14 @@ def apply_rules_1d(state : np.ndarray, which_rules : str) -> np.ndarray:
 @njit(parallel = True)
 def apply_rules_2d(state : np.ndarray, which_rules : str) -> np.ndarray:
     
+    N = len(state)
     new_state = np.full(state.shape, False)
     
-    for site_index, current_cell_value in np.ndenumerate(state):
+    for idx in prange(N**2):
+        
+        x, y = np.unravel_index(idx, state.shape)
+        current_cell_value = state[x, y]
+        site_index = (x, y)
 
         if which_rules == 'game_of_life':
             
@@ -46,9 +57,14 @@ def apply_rules_2d(state : np.ndarray, which_rules : str) -> np.ndarray:
 @njit(parallel = True)
 def apply_rules_3d(state : np.ndarray, which_rules : str) -> np.ndarray:
     
+    N = len(state)
     new_state = np.full(state.shape, False)
     
-    for site_index, current_cell_value in np.ndenumerate(state):
+    for idx in prange(N**3):
+        
+        x, y, z = np.unravel_index(idx, state.shape)
+        current_cell_value = state[x, y, z]
+        site_index = (x, y, z)
 
         if which_rules == 'clouds_I':
             
