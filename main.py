@@ -4,7 +4,7 @@ from datetime import datetime
 from init_state import get_initial_state
 import sys
 
-num_threads = sys.argv[1]
+num_threads = int(sys.argv[1])
 
 numba.set_num_threads(num_threads)
 print('Number of numba threads is set to:', numba.get_num_threads(), flush = True)
