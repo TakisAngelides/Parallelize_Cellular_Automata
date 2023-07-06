@@ -10,6 +10,8 @@ def get_configurations(num_iterations, initial_state, shape, which_rules):
         width = shape[0]
         block_size = 1
         grid_size = (width + block_size - 1) // block_size
+        block_size = 216
+        grid_size = 1024
     
         configurations = np.empty((num_iterations + 1, width), dtype=bool)
         configurations[0, :] = initial_state
@@ -35,6 +37,8 @@ def get_configurations(num_iterations, initial_state, shape, which_rules):
         
         block_size = (1, 1)
         grid_size = ((width + block_size[0] - 1) // block_size[0], (height + block_size[1] - 1) // block_size[1])
+        block_size = (216, 216)
+        grid_size = (1024, 1024)
         
         configurations = np.empty((num_iterations + 1, width, height), dtype = bool)  # Array to store configurations on CPU
         configurations[0, :, :] = initial_state
@@ -65,6 +69,8 @@ def get_configurations(num_iterations, initial_state, shape, which_rules):
             (height + block_size[1] - 1) // block_size[1],
             (depth + block_size[2] - 1) // block_size[2]
         )
+        block_size = (216, 216, 216)
+        grid_size = (1024, 1024, 1024)
     
         configurations = np.empty((num_iterations + 1, width, height, depth), dtype=bool)
         configurations[0, :, :, :] = initial_state

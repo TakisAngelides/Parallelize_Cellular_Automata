@@ -3,8 +3,6 @@ from datetime import datetime
 from get_configurations import *
 import numba
 
-numba.set_num_threads(32)
-
 def get_simulation(items):
 
     time_steps, initial_state, which_rules, trial_num = items
