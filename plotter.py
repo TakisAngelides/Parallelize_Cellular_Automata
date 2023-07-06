@@ -62,7 +62,7 @@ def plot_duration_vs_N():
                 d_tmp = df[(df.time == time) & (df.d == d) & (df.rules == rules)]
                 d_std_tmp = df_std[(df.time == time) & (df.d == d) & (df.rules == rules)]
 
-                x = np.array(d_tmp.N) # **d
+                x = np.array(d_tmp.N)**d
                 y = d_tmp.duration
                 yerr = d_std_tmp.duration
                 
@@ -72,7 +72,7 @@ def plot_duration_vs_N():
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel(f'$N^{d}$')
-                # plt.xscale('log')
+                plt.xscale('log')
                 plt.savefig(f'Plots/njit_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
     
