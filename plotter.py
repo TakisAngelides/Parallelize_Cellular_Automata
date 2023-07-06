@@ -26,8 +26,8 @@ for element in os.listdir('Timing_Results/njit_timed'):
 df_std = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].std()
 df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
 
-df_std.to_csv('Timing_Dataframes/njit_timed_std.csv', index=False)
-df.to_csv('Timing_Dataframes/njit_timed.csv', index=False)
+# df_std.to_csv('Timing_Dataframes/njit_timed_std.csv', index=False)
+# df.to_csv('Timing_Dataframes/njit_timed.csv', index=False)
 
 def plot_duration_vs_time():
 
@@ -51,7 +51,7 @@ def plot_duration_vs_time():
                 plt.savefig(f'Plots/njit_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
                 
-plot_duration_vs_time()    
+# plot_duration_vs_time()    
             
 def plot_duration_vs_N():
 
