@@ -47,7 +47,7 @@ def plot_duration_vs_time():
                 
 def plot_duration_vs_N():
 
-    for N in set(df.N):
+    for time in set(df.time):
         for d in set(df.d):
             for rules in set(df.rules):
                             
