@@ -36,8 +36,8 @@ def apply_rules_2d(state : np.ndarray, which_rules : str, site_indices : np.ndar
     for idx in range(N**2):
         
         site_index = site_indices[idx]
+        print(site_index)
         current_cell_value = state[site_index][0]
-        print(current_cell_value)
 
         if which_rules == 'game_of_life':
             

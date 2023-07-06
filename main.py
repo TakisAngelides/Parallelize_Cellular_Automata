@@ -35,7 +35,6 @@ def get_configurations(items):
         if d == 2:
         
             site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**2)])
-            print(site_indices)
             state = apply_rules_2d(state, which_rules, site_indices)
             
         if d == 3:
