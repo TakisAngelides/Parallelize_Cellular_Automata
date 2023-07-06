@@ -1,13 +1,13 @@
 from neighbours import *
 from numba import prange
 
-# @njit(parallel = True)
+@njit(parallel = True)
 def apply_rules_1d(state : np.ndarray, which_rules : str, site_indices : np.ndarray) -> np.ndarray:
         
     N = len(state)
     new_state = np.full(state.shape, False)
     
-    for idx in range(N):
+    for idx in prange(N):
         
         site_index = site_indices[idx]
         current_cell_value = state[site_index]
@@ -15,9 +15,8 @@ def apply_rules_1d(state : np.ndarray, which_rules : str, site_indices : np.ndar
         if which_rules == '54':
             
             alive = count_alive_neighbours_1d(site_index, state)
-            print(alive)
 
-            new_state[site_index] = ((current_cell_value == True and alive == 0 ) or ((current_cell_value == False) and (alive > 0)))
+            new_state[site_index] = (((current_cell_value == True) and (alive == 0)) or ((current_cell_value == False) and (alive > 0)))
 
         if which_rules == '90':
             
