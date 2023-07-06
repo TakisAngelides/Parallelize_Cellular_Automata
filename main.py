@@ -28,16 +28,19 @@ def get_configurations(items):
     for t in range(1, time_steps):
         
         if d == 1:
-        
-            state = apply_rules_1d(state, which_rules)
+            
+            site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N)])
+            state = apply_rules_1d(state, which_rules, site_indices)
             
         if d == 2:
         
-            state = apply_rules_2d(state, which_rules)
+            site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**2)])
+            state = apply_rules_2d(state, which_rules, site_indices)
             
         if d == 3:
-        
-            state = apply_rules_3d(state, which_rules)
+            
+            site_indices = np.array([np.unravel_index(idx, state.shape) for idx in range(N**3)])
+            state = apply_rules_3d(state, which_rules, site_indices)
         
         
         configurations[t] = state
