@@ -2,7 +2,7 @@ from itertools import product
 import numpy as np
 from numba import njit
 
-@njit(parallel = True)
+@njit()
 def count_alive_neighbours_1d(site: np.ndarray, state: np.ndarray) -> int:
     
     N = len(state)
@@ -12,7 +12,7 @@ def count_alive_neighbours_1d(site: np.ndarray, state: np.ndarray) -> int:
     
     return state[left] + state[right]
 
-@njit(parallel = True)
+@njit()
 def count_alive_neighbours_2d(site: np.ndarray, state: np.ndarray) -> int:
     
     N = len(state)
@@ -24,7 +24,7 @@ def count_alive_neighbours_2d(site: np.ndarray, state: np.ndarray) -> int:
                 
     return state[left, site[1]] + state[right, site[1]] + state[site[0], top] + state[site[0], bottom] + state[left, top] + state[right, top] + state[left, bottom] + state[right, bottom]
 
-@njit(parallel = True)
+@njit()
 def count_alive_neighbours_3d(site: np.ndarray, state: np.ndarray) -> int:
     
     N = len(state)
