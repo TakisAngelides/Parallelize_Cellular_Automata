@@ -42,6 +42,9 @@ def plot_duration_vs_time():
                 y = d_tmp.duration
                 yerr = d_std_tmp.duration
                 
+                if len(y) == 0:
+                    continue
+                
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel('Evolution Steps')
@@ -63,9 +66,13 @@ def plot_duration_vs_N():
                 y = d_tmp.duration
                 yerr = d_std_tmp.duration
                 
+                if len(y) == 0:
+                    continue
+                
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel(f'$N^{d}$')
+                plt.xscale('log')
                 plt.savefig(f'Plots/njit_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
     
