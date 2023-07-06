@@ -1,6 +1,9 @@
 from datetime import datetime
 # import multiprocessing
 from get_configurations import *
+import numba
+
+numba.set_num_threads(32)
 
 def get_simulation(items):
 
@@ -34,7 +37,7 @@ def get_simulation(items):
 trial_num = 5
 time_steps_list = [10, 20, 30, 40, 50]
 N_list = [4, 8, 16, 32, 64, 128]
-which_rules_list = ['54', '90', 'game_of_life', 'clouds_I', 'builder_II'] # 'tumor_growth'
+which_rules_list = ['54', '90', 'game_of_life', 'game_of_life', 'clouds_I', 'builder_II'] # 'tumor_growth'
 process_items = []
 
 for i in range(trial_num):
