@@ -10,10 +10,10 @@ should_transfer_files = IF_NEEDED
 
 request_memory = 3G 
 
-error = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_main_timed.error
+error = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_njit_timed.error
 
-output = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_main_timed.out
+output = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_njit_timed.out
 
-log = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_main_timed.log
+log = /lustre/fs24/group/cqta/tangelides/Logs/$(Cluster)_$(Process)_njit_timed.log
 
 queue

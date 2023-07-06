@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 columns = ['d', 'time', 'N', 'trial', 'rules', 'duration']
 df = pd.DataFrame(columns = columns)
-for element in os.listdir('Timing_Results/main_timed'):
+for element in os.listdir('Timing_Results/njit_timed'):
     
     row = element.split('.')[0]
     row = row.split('_')
@@ -15,7 +15,7 @@ for element in os.listdir('Timing_Results/main_timed'):
     trial = int(row[3])
     rules = row[4]
     
-    with open(f'Timing_Results/main_timed/{element}', 'r') as f:
+    with open(f'Timing_Results/njit_timed/{element}', 'r') as f:
         duration = float(f.read())
 
     data_tmp = [d, time, N, trial, rules, duration]
@@ -25,6 +25,9 @@ for element in os.listdir('Timing_Results/main_timed'):
 
 df_std = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].std()
 df = df.groupby(['d', 'time', 'N', 'rules'], as_index = False)['duration'].mean()
+
+df_std.to_csv('Timing_Dataframes/njit_timed_std.csv', index=False)
+df.to_csv('Timing_Dataframes/njit_timed.csv', index=False)
 
 def plot_duration_vs_time():
 
@@ -42,10 +45,10 @@ def plot_duration_vs_time():
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel('Evolution Steps')
-                plt.savefig(f'Plots/main_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
+                plt.savefig(f'Plots/njit_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
                 
-# plot_duration_vs_time()    
+plot_duration_vs_time()    
             
 def plot_duration_vs_N():
 
@@ -63,10 +66,10 @@ def plot_duration_vs_N():
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel(f'$N^{d}$')
-                plt.savefig(f'Plots/main_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
+                plt.savefig(f'Plots/njit_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
     
-# plot_duration_vs_N()    
+plot_duration_vs_N()    
 
 
 
