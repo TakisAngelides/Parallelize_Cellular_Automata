@@ -45,6 +45,8 @@ def plot_duration_vs_time():
                 plt.savefig(f'Plots/main_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
                 
+plot_duration_vs_time()    
+            
 def plot_duration_vs_N():
 
     for time in set(df.time):
@@ -61,9 +63,8 @@ def plot_duration_vs_N():
                 plt.errorbar(x, y, yerr = yerr, fmt = 'x')
                 plt.ylabel('Duration (s)')
                 plt.xlabel(f'$N^{d}$')
-                plt.savefig(f'Plots/main_timed/duration_vs_time/{d}_{N}_{rules}.png', bbox_inches = 'tight')
+                plt.savefig(f'Plots/main_timed/duration_vs_N/{d}_{time}_{rules}.png', bbox_inches = 'tight')
                 plt.close()
-    
     
 plot_duration_vs_N()    
 
