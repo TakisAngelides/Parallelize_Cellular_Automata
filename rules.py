@@ -1,7 +1,7 @@
 from neighbours import *
 
 @njit()
-def apply_rules(state : np.ndarray, which_rules : str) -> np.ndarray:
+def apply_rules_1d(state : np.ndarray, which_rules : str) -> np.ndarray:
         
     new_state = np.full(state.shape, False)
     
@@ -19,6 +19,16 @@ def apply_rules(state : np.ndarray, which_rules : str) -> np.ndarray:
 
             new_state[site_index] = ((current_cell_value == True and alive == 1 ) or (current_cell_value == False and alive == 1))
 
+    return new_state
+
+
+@njit()
+def apply_rules_2d(state : np.ndarray, which_rules : str) -> np.ndarray:
+    
+    new_state = np.full(state.shape, False)
+    
+    for site_index, current_cell_value in np.ndenumerate(state):
+
         if which_rules == 'game_of_life':
             
             alive = count_alive_neighbours_2d(site_index, state)
@@ -31,6 +41,15 @@ def apply_rules(state : np.ndarray, which_rules : str) -> np.ndarray:
 
             new_state[site_index] = (current_cell_value == True or (current_cell_value == False and alive >= 3 and np.random.rand() < 0.2))
 
+    return new_state
+
+@njit()
+def apply_rules_3d(state : np.ndarray, which_rules : str) -> np.ndarray:
+    
+    new_state = np.full(state.shape, False)
+    
+    for site_index, current_cell_value in np.ndenumerate(state):
+
         if which_rules == 'clouds_I':
             
             alive = count_alive_neighbours_3d(site_index, state)
@@ -42,5 +61,5 @@ def apply_rules(state : np.ndarray, which_rules : str) -> np.ndarray:
             alive = count_alive_neighbours_3d(site_index, state)
 
             new_state[site_index] = ((current_cell_value == True and alive <= 26 and alive >= 13) or (current_cell_value == False and alive ==1))
-    
+
     return new_state

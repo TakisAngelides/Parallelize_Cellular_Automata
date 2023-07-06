@@ -24,7 +24,17 @@ def get_configurations(items):
     
     for t in range(1, time_steps):
         
-        state = apply_rules(state, which_rules)
+        if d == 1:
+        
+            state = apply_rules_1d(state, which_rules)
+            
+        if d == 2:
+        
+            state = apply_rules_2d(state, which_rules)
+            
+        if d == 3:
+        
+            state = apply_rules_3d(state, which_rules)
         
         configurations[t] = state
         
