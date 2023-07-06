@@ -42,7 +42,7 @@ def apply_rules_2d(state : np.ndarray, which_rules : str, site_indices : np.ndar
             
             alive = count_alive_neighbours_2d(site_index, state)
 
-            new_state[site_index] = ((current_cell_value) and ((alive == 2) or (alive == 3))) or ((not current_cell_value) and (alive == 3))
+            new_state[site_index] = ((current_cell_value) and ((alive == 2) or (alive == 3))) or ((current_cell_value == False) and (alive == 3))
 
         if which_rules == 'tumor_growth':
             
