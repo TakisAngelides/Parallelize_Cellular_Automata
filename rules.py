@@ -17,13 +17,13 @@ def apply_rules_1d(state : np.ndarray, which_rules : str, site_indices : np.ndar
             
             alive = count_alive_neighbours_1d(site_index, state)
 
-            new_state[site_index] = (((current_cell_value == True) and (alive == 0)) or ((current_cell_value == False) and (alive > 0)))
+            new_state[site_index] = (((current_cell_value) and (alive == 0)) or ((current_cell_value) and (alive > 0)))
 
         if which_rules == '90':
             
             alive = count_alive_neighbours_1d(site_index, state)
 
-            new_state[site_index] = (((current_cell_value == True) and (alive == 1)) or ((current_cell_value == False) and (alive == 1)))
+            new_state[site_index] = (((current_cell_value) and (alive == 1)) or ((current_cell_value) and (alive == 1)))
 
     return new_state
 
