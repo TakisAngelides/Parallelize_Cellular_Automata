@@ -74,7 +74,7 @@ def apply_rules_3d(state : np.ndarray, which_rules : str, site_indices : np.ndar
     
     if which_rules == 'clouds_I':
         
-        for idx in prange(N**3):
+        for idx in range(N**3):
         
             site_index = site_indices[idx]
             x, y, z = site_index
