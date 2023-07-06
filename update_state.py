@@ -58,8 +58,7 @@ def update_state_2D_rGOL(width, height, configurations_dev, iteration):
     configurations_dev[iteration-1, right, bottom]
 )
       
-    configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or 
-                                          ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
+    configurations_dev[iteration, x, y] = ((configurations_dev[iteration-1, x, y]) and (alive >= 2) and (alive < 4)) or ((not configurations_dev[iteration-1, x, y]) and (alive == 3))
 
 @cuda.jit
 def update_state_2D_rTG(width, height, configurations_dev, iteration):
